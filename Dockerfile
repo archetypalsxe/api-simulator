@@ -1,6 +1,7 @@
 FROM golang
 
-ADD src /go/src/worldspan-simulator
+ADD . /go/src/worldspan-simulator
+#ADD src /go/src/worldspan-simulator
 #ADD src/gorilla-mux /go/src/github.com/gorilla/mux
 
 RUN go install worldspan-simulator
