@@ -3,7 +3,7 @@
 MYSELF="$(realpath "$0")"
 MYDIR="${MYSELF%/*}"
 
-echo $MYSELF
-echo $MYDIR
+# Stop it in case it's already running
+source $MYDIR/stop
 source $MYDIR/build
 source $MYDIR/run
