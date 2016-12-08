@@ -1,5 +1,5 @@
-Ability to determine type of request/response
-Ability to go through funnel
+Run on sandbox
+Run on QA box
 Dynamically create response
 Try to create a database for storing settings
 Refactor

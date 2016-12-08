@@ -12,6 +12,12 @@ import (
     "gorilla/mux"
 )
 
+/**
+    @TODO
+    We should be breaking a bunch of these functions into separate classes,
+    especially Worldspan handler
+*/
+
 func main() {
 
     router := mux.NewRouter().StrictSlash(true)
@@ -38,16 +44,30 @@ func Worldspan(response http.ResponseWriter, request *http.Request) {
         log.Fatal(error);
     }
     if (strings.Contains(string(body), "<PSC5>")) {
-        HandlePowerShopperRequest(response);
+        // @TODO Ideally, we wouldn't be using the full path here
+        // @TODO Also, couldn't figure out how to break up the line below
+        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testPowerShopperResponse", response);
+    } else if (strings.Contains(string(body), "<BPC9>")) {
+        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testPricingResponse", response);
+    } else if (strings.Contains(string(body), "<HOS_CMD>CK/")) {
+        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testCardAuthorization", response);
+    } else if (strings.Contains(string(body), "<UPC7>")) {
+        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testUpdatePnrResponse", response);
+    } else if (strings.Contains(string(body), "<HOS_CMD>*")) {
+        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testNativeDisplayPnrResponse", response);
+    } else if (strings.Contains(string(body), "<HOS_CMD>EZEI#$*")) {
+        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testTicketingResponse", response);
+    } else if (strings.Contains(string(body), "<HOS_RSP_SCR>F</HOS_RSP_SCR>")) {
+        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testFinished", response);
+    } else if (strings.Contains(string(body), "<DPC8>")) {
+        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testDisplayPnrResponse", response);
     } else {
         fmt.Fprintln(response, "Type of request not found");
     }
 }
 
-func HandlePowerShopperRequest(response http.ResponseWriter) {
-    // @TODO Ideally, we wouldn't be using the full path here
-    // @TODO Also, couldn't figure out how to break up the line below
-    data, error := ioutil.ReadFile("/go/src/worldspan-simulator/data/testPowerShopperResponse");
+func HandleWorldspanRequest(responseFile string, response http.ResponseWriter) {
+    data, error := ioutil.ReadFile(responseFile);
     if (error != nil) {
         log.Fatal(error);
     }
