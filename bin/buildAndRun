@@ -1,0 +1,9 @@
+#!/bin/bash
+
+MYSELF="$(realpath "$0")"
+MYDIR="${MYSELF%/*}"
+
+echo $MYSELF
+echo $MYDIR
+source $MYDIR/build
+source $MYDIR/run
