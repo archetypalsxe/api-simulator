@@ -5,11 +5,12 @@ import (
     "io"
     "io/ioutil"
     "log"
+    "os"
     "net/http"
     "strings"
 
     // Third party code for routing
-    "gorilla/mux"
+    "github.com/gorilla/mux"
 )
 
 /**
@@ -29,7 +30,7 @@ func main() {
 }
 
 func Index(response http.ResponseWriter, request *http.Request) {
-    fmt.Fprintf(response, "Root directory of the API simulator")
+    fmt.Fprintf(response, "Root directory of the API simulator\n")
 }
 
 func ExampleId(response http.ResponseWriter, request *http.Request) {
@@ -39,6 +40,9 @@ func ExampleId(response http.ResponseWriter, request *http.Request) {
 }
 
 func Worldspan(response http.ResponseWriter, request *http.Request) {
+    // @TODO Should be using os.PathSeparator
+    dataPath := os.Getenv("GOPATH") + "/data/";
+
     body, error := ioutil.ReadAll(io.LimitReader(request.Body, 1048576));
     if (error != nil) {
         log.Fatal(error);
@@ -46,21 +50,21 @@ func Worldspan(response http.ResponseWriter, request *http.Request) {
     if (strings.Contains(string(body), "<PSC5>")) {
         // @TODO Ideally, we wouldn't be using the full path here
         // @TODO Also, couldn't figure out how to break up the line below
-        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testPowerShopperResponse", response);
+        HandleWorldspanRequest(dataPath + "testPowerShopperResponse", response);
     } else if (strings.Contains(string(body), "<BPC9>")) {
-        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testPricingResponse", response);
+        HandleWorldspanRequest(dataPath + "testPricingResponse", response);
     } else if (strings.Contains(string(body), "<HOS_CMD>CK/")) {
-        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testCardAuthorization", response);
+        HandleWorldspanRequest(dataPath + "testCardAuthorization", response);
     } else if (strings.Contains(string(body), "<UPC7>")) {
-        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testUpdatePnrResponse", response);
+        HandleWorldspanRequest(dataPath + "testUpdatePnrResponse", response);
     } else if (strings.Contains(string(body), "<HOS_CMD>*")) {
-        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testNativeDisplayPnrResponse", response);
+        HandleWorldspanRequest(dataPath + "testNativeDisplayPnrResponse", response);
     } else if (strings.Contains(string(body), "<HOS_CMD>EZEI#$*")) {
-        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testTicketingResponse", response);
+        HandleWorldspanRequest(dataPath + "testTicketingResponse", response);
     } else if (strings.Contains(string(body), "<HOS_RSP_SCR>F</HOS_RSP_SCR>")) {
-        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testFinished", response);
+        HandleWorldspanRequest(dataPath + "testFinished", response);
     } else if (strings.Contains(string(body), "<DPC8>")) {
-        HandleWorldspanRequest("/go/src/worldspan-simulator/data/testDisplayPnrResponse", response);
+        HandleWorldspanRequest(dataPath + "testDisplayPnrResponse", response);
     } else {
         fmt.Fprintln(response, "Type of request not found");
     }

@@ -1,6 +1,7 @@
 FROM golang
 
 ADD . /go/src/worldspan-simulator
+ADD data /go/data
 #ADD src /go/src/worldspan-simulator
 #ADD src/gorilla-mux /go/src/github.com/gorilla/mux
 
