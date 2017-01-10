@@ -7,6 +7,8 @@
 * bin/ssh will SSH into the docker instance
 * bin/stop will stop the docker instance
 
+Accessed by navigating to http://localhost:6060/worldspan locally
+
 ## Running on a Server
 This was done on a CentOS 6.6 server and is pretty much documentation for myself so I don't forget. Mileage may vary
 1. git clone the repo somewhere on the server

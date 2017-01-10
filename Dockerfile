@@ -5,6 +5,7 @@ ADD data /go/data
 #ADD src /go/src/worldspan-simulator
 #ADD src/gorilla-mux /go/src/github.com/gorilla/mux
 
+RUN go get worldspan-simulator
 RUN go install worldspan-simulator
 
 ENTRYPOINT /go/bin/worldspan-simulator
