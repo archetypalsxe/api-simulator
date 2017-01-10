@@ -1,5 +1,4 @@
-Run on sandbox
-    Test going completely through sandbox
+No longer working in a docker container
 Run on QA box
 TODO's
 Dynamically create response

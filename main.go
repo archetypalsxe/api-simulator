@@ -48,7 +48,6 @@ func Worldspan(response http.ResponseWriter, request *http.Request) {
         log.Fatal(error);
     }
     if (strings.Contains(string(body), "<PSC5>")) {
-        // @TODO Ideally, we wouldn't be using the full path here
         // @TODO Also, couldn't figure out how to break up the line below
         HandleWorldspanRequest(dataPath + "testPowerShopperResponse", response);
     } else if (strings.Contains(string(body), "<BPC9>")) {
