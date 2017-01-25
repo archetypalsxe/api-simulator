@@ -1,6 +1,6 @@
-No longer working in a docker container
 Run on QA box
 TODO's
+    Move Worldspan into it's own class
 Dynamically create response
 Try to create a database for storing settings
 Refactor

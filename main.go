@@ -40,6 +40,10 @@ func ExampleId(response http.ResponseWriter, request *http.Request) {
 }
 
 func Worldspan(response http.ResponseWriter, request *http.Request) {
+    worldspan := worldspanConnection{response: response, request: request};
+    worldspan.testing();
+
+
     // @TODO Should be using os.PathSeparator
     dataPath := os.Getenv("GOPATH") + "/data/";
 

@@ -23,3 +23,7 @@ This was done on a CentOS 6.6 server and is pretty much documentation for myself
   6. Compile the code: `go install main.go`
   7. Run the code: `bin/main.go`
   8. To access the code, navigate to: `http://127.0.0.1:8080/worldspan`
+
+## Compiling
+* To just compile (check for errors):
+  * `go build *.go`
