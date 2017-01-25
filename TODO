@@ -1,6 +1,8 @@
 Run on QA box
 TODO's
     Move Worldspan into it's own class
+        Done?
+    Make a generic connection class
 Dynamically create response
 Try to create a database for storing settings
 Refactor
