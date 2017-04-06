@@ -1,6 +1,7 @@
 # An API Simulator
 
 ## Commands for Running in a Docker Container
+Tested in Arch Linux and Fedora
 * bin/build can be used to compile the Go code
 * bin/buildAndRun compiles and also runs the compiled code
 * bin/run will just run the already compiled code

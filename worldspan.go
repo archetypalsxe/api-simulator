@@ -16,10 +16,6 @@ type worldspanConnection struct {
     response http.ResponseWriter;
 }
 
-func (self *worldspanConnection) testing() {
-    fmt.Fprintln(self.response, "Type of request not found!!!!");
-}
-
 func (self *worldspanConnection) respond() {
     body, error := ioutil.ReadAll(io.LimitReader(self.request.Body, 1048576));
     if (error != nil) {

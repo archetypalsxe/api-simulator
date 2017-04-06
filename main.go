@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-
     router := mux.NewRouter().StrictSlash(true)
     router.HandleFunc("/", Index)
     router.HandleFunc("/example/{id}", ExampleId)
