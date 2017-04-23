@@ -4,6 +4,7 @@ import (
     "fmt"
     "log"
     "net/http"
+    "strings"
 
     // Third party code for routing
     "github.com/gorilla/mux"
@@ -24,7 +25,7 @@ func Index(response http.ResponseWriter, request *http.Request) {
 
 func ExampleId(response http.ResponseWriter, request *http.Request) {
     providedVars := mux.Vars(request)
-    identifier := providedVars["id"]
+    identifier := strings.TrimSpace(providedVars["id"])
     fmt.Fprintln(response, "Provided ID: ", identifier)
 }
 

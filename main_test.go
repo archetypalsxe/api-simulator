@@ -4,15 +4,31 @@ import (
     "io/ioutil"
     "log"
     "net/http"
-    //"net/http/httptest"
     "net/url"
     "strings"
     "testing"
 )
 
-func TestThisTest(test *testing.T) {
-    response, error := http.PostForm("http://localhost:6060/",
-        url.Values{"key": {"Value"}, "id": {"123"}})
+func TestRootDirectory(test *testing.T) {
+    sendRequest(test,
+        "http://localhost:6060",
+        url.Values{},
+        "Root directory of the API simulator")
+}
+
+func TestExampleId(test *testing.T) {
+    sendRequest(test,
+        "http://localhost:6060/example/5",
+        url.Values{},
+        "Provided ID:  5")
+}
+        //url.Values{"key": {"Value"}, "id": {"123"}})
+
+func sendRequest(test *testing.T,
+    url string,
+    urlValues url.Values,
+    expectedText string) {
+    response, error := http.PostForm(url, urlValues)
     if error != nil {
         log.Fatal(error)
     }
@@ -24,22 +40,8 @@ func TestThisTest(test *testing.T) {
     }
 
     if(!strings.Contains(string(body),
-        "Root directory of the API simulator")) {
-        test.Error("Failed")
+        expectedText)) {
+            test.Error("Did not find expected text: '" + expectedText +
+            "' Received: '"+ strings.TrimSpace(string(body)) + "'")
     }
 }
-
-/*
-func TestHitOnRootDirectory(test *testing.T) {
-    req := httptest.NewRequest("POST", "http://localhost:6060/", nil)
-    w := httptest.NewRecorder()
-    Index(w, req)
-
-    resp := w.Result()
-    body, _ := ioutil.ReadAll(resp.Body)
-
-    if(!strings.Contains(string(body), "Root directory of the API simulator")) {
-        test.Error("Failed")
-    }
-}
-*/
