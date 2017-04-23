@@ -1,4 +1,5 @@
 Automated testing
+    Write tests for all the Worldspan endpoints
 Run on QA box
 TODO's
     Move Worldspan into it's own class
