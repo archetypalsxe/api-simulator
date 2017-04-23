@@ -2,21 +2,44 @@ package main
 
 import (
     "io/ioutil"
-    "net/http/httptest"
+    "log"
+    "net/http"
+    //"net/http/httptest"
+    "net/url"
     "strings"
     "testing"
 )
 
-func TestHitOnRootDirectory(t *testing.T) {
+func TestThisTest(test *testing.T) {
+    response, error := http.PostForm("http://localhost:6060/",
+        url.Values{"key": {"Value"}, "id": {"123"}})
+    if error != nil {
+        log.Fatal(error)
+    }
 
-    req := httptest.NewRequest("POST", "http://localhost:6000/", nil)
-	w := httptest.NewRecorder()
-	Index(w, req)
+    defer response.Body.Close()
+    body, error := ioutil.ReadAll(response.Body)
+    if error != nil {
+        log.Fatal(error)
+    }
 
-	resp := w.Result()
-	body, _ := ioutil.ReadAll(resp.Body)
-
-    if(!strings.Contains(string(body), "Root directory of the API simulator")) {
-        t.Error("Failed")
+    if(!strings.Contains(string(body),
+        "Root directory of the API simulator")) {
+        test.Error("Failed")
     }
 }
+
+/*
+func TestHitOnRootDirectory(test *testing.T) {
+    req := httptest.NewRequest("POST", "http://localhost:6060/", nil)
+    w := httptest.NewRecorder()
+    Index(w, req)
+
+    resp := w.Result()
+    body, _ := ioutil.ReadAll(resp.Body)
+
+    if(!strings.Contains(string(body), "Root directory of the API simulator")) {
+        test.Error("Failed")
+    }
+}
+*/
