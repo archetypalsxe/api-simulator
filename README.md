@@ -30,9 +30,13 @@ This was done on a CentOS 6.6 server and is pretty much documentation for myself
   3. (Optional) Add to the path: `PATH=$PATH:$GOPATH/bin`
   4. Setup the go bin directory: `export GOBIN=$GOPATH/bin`
   5. Get necessary dependencies `go get`
-  6. Compile the code: `go install main.go`
-  7. Run the code: `bin/main.go`
+  6. Compile the code: `go install`
+  7. Run the code: `$GOBIN/api-simulator`
   8. To access the code, navigate to: `http://127.0.0.1:8080/worldspan`
+    * Or the server IP if it's not local in place of 127.0.0.1
+  9. If not already in the same folder, move the data folder into the $GOPATH
+    * `mv data $GOBIN`
+  10. Run `go test` to test to make sure that everything is working
 
 ## Compiling
 * To just compile (check for errors):
