@@ -1,10 +1,16 @@
+Create page for modifying database settings
+Dynamically create response
+    Create database
+        APIs (Worldspan)
+        Requests
+            Fields that should be found in the request
+        Responses
+            Static
+            Dynamic Fields in the response
+        Pull fields from request
 Dynamic addressing for tests
-Automated testing
-    Done?
 TODO's
     Move Worldspan into it's own class
         Done? Need to test
     Make a generic connection class
-Dynamically create response
-Try to create a database for storing settings
 Refactor

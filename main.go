@@ -13,6 +13,7 @@ import (
 func main() {
     router := mux.NewRouter().StrictSlash(true)
     router.HandleFunc("/", Index)
+    router.HandleFunc("/settings", Settings)
     router.HandleFunc("/example/{id}", ExampleId)
     router.HandleFunc("/worldspan", Worldspan)
 
@@ -23,6 +24,11 @@ func Index(response http.ResponseWriter, request *http.Request) {
     fmt.Fprintf(response, "Root directory of the API simulator\n")
 }
 
+func Settings(response http.ResponseWriter, request *http.Request) {
+    settingsPage := settingsPage{response: response, request: request}
+    settingsPage.respond()
+}
+
 func ExampleId(response http.ResponseWriter, request *http.Request) {
     providedVars := mux.Vars(request)
     identifier := strings.TrimSpace(providedVars["id"])
@@ -30,7 +36,7 @@ func ExampleId(response http.ResponseWriter, request *http.Request) {
 }
 
 func Worldspan(response http.ResponseWriter, request *http.Request) {
-    worldspan := worldspanConnection{response: response, request: request};
-    worldspan.respond();
+    worldspan := worldspanConnection{response: response, request: request}
+    worldspan.respond()
 }
 

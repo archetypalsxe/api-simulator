@@ -17,6 +17,13 @@ func TestRootDirectory(test *testing.T) {
         "Root directory of the API simulator")
 }
 
+func TestSettingsPage(test *testing.T) {
+    sendRequestForm(test,
+        "http://localhost:6060/settings",
+        url.Values{},
+        "This is the settings page")
+}
+
 func TestExampleId(test *testing.T) {
     sendRequestForm(test,
         "http://localhost:6060/example/5",
