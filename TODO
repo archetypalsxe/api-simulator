@@ -1,8 +1,6 @@
-Have a service that runs the executable
 Dynamic addressing for tests
 Automated testing
     Done?
-Run on QA box
 TODO's
     Move Worldspan into it's own class
         Done? Need to test
