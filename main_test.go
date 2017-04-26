@@ -30,6 +30,63 @@ func TestWorldspanPowerShopper(test *testing.T) {
         strings.NewReader("<PSC5>"),
         "PSW5")
 }
+
+func TestWorldspanPricingResponse(test *testing.T) {
+    sendRequestPost(test,
+        "http://localhost:6060/worldspan",
+        strings.NewReader("<BPC9>"),
+        "BPW9")
+}
+
+func TestWorldspanCardAuthorization(test *testing.T) {
+    sendRequestPost(test,
+        "http://localhost:6060/worldspan",
+        strings.NewReader("<HOS_CMD>CK/"),
+        "OK - APVL CODE IS")
+}
+
+func TestWorldspanUpdatePnr(test *testing.T) {
+    sendRequestPost(test,
+        "http://localhost:6060/worldspan",
+        strings.NewReader("<UPC7>"),
+        "UPW7")
+}
+
+func TestWorldspanDisplayPnrNative(test *testing.T) {
+    sendRequestPost(test,
+        "http://localhost:6060/worldspan",
+        strings.NewReader("<HOS_CMD>*"),
+        "<HOS_RSP_SCR>M</HOS_RSP_SCR>")
+}
+
+func TestWorldspanTicketing(test *testing.T) {
+    sendRequestPost(test,
+        "http://localhost:6060/worldspan",
+        strings.NewReader("<HOS_CMD>EZEI#$*"),
+        "TKT NBR")
+}
+
+func TestWorldspanCloseSession(test *testing.T) {
+    sendRequestPost(test,
+        "http://localhost:6060/worldspan",
+        strings.NewReader("<HOS_RSP_SCR>F</HOS_RSP_SCR>"),
+        "<RSP_COU>0000</RSP_COU>")
+}
+
+func TestWorldspanDisplayPnr(test *testing.T) {
+    sendRequestPost(test,
+        "http://localhost:6060/worldspan",
+        strings.NewReader("<DPC8>"),
+        "DPW8")
+}
+
+func TestWorldspanInvalidRequest(test *testing.T) {
+    sendRequestPost(test,
+        "http://localhost:6060/worldspan",
+        strings.NewReader("Invalid Request"),
+        "Type of request not found")
+}
+
         //url.Values{"key": {"Value"}, "id": {"123"}})
 
 func sendRequestForm(test *testing.T,

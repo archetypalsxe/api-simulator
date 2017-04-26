@@ -1,5 +1,14 @@
 # An API Simulator
 
+## Requirements
+* docker (if running in a docker instance)
+  * docker daemon should be running
+  * Either need to use sudo to the commands below, or add user to the docker group
+* golang
+  * Only needed if running directly on a server or
+  * To run automated tests  or
+  * To compile without running in docker
+
 ## Commands for Running in a Docker Container
 Tested in Arch Linux and Fedora
 * bin/build can be used to compile the Go code
@@ -28,3 +37,6 @@ This was done on a CentOS 6.6 server and is pretty much documentation for myself
 ## Compiling
 * To just compile (check for errors):
   * `go build *.go`
+
+## Running Automated Tests
+* `go test`
