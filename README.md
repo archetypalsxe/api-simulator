@@ -11,11 +11,11 @@
 
 ## Commands for Running in a Docker Container
 Tested in Arch Linux and Fedora
-* bin/build can be used to compile the Go code
-* bin/buildAndRun compiles and also runs the compiled code
-* bin/run will just run the already compiled code
-* bin/ssh will SSH into the docker instance
-* bin/stop will stop the docker instance
+* customBin/build can be used to compile the Go code
+* customBin/buildAndRun compiles and also runs the compiled code
+* customBin/run will just run the already compiled code
+* customBin/ssh will SSH into the docker instance
+* customBin/stop will stop the docker instance
 
 Accessed by navigating to http://localhost:6060/worldspan locally
 
