@@ -1,3 +1,11 @@
+Figure out why not able to retrieve from messages table
+    Table is being created correctly
+    See if data is being inserted correctly....
+
+Add escape key for each api
+    Beginning
+    Ending
+
 Create Database
     Create tables
     Insert into tables

@@ -20,14 +20,33 @@ func (self *database) connect() {
 }
 
 func (self *database) getApis() *sql.Rows {
-    self.runQuery("INSERT INTO Apis (name) VALUES ('worldspan');")
     rows, error := self.connection.Query("SELECT * FROM Apis;")
     self.handleError(error)
     return rows
 }
 
+func (self *database) getMessages() *sql.Rows {
+    rows, error := self.connection.Query("SELECT * FROM Messages;")
+    self.handleError(error)
+    return rows
+}
+
+func (self *database) insertData() {
+    self.runQuery("DELETE FROM Apis;")
+    self.runQuery("INSERT INTO Apis (name) VALUES ('worldspan');")
+    self.runQuery("DELETE FROM Messages;")
+    self.runQuery("INSERT INTO Messages (apiId, identifier, responseId) "+
+        "VALUES ("+
+            //"(SELECT id FROM Apis WHERE name = 'worldspan'), "+
+            "3," +
+            "'PSC5', "+
+            "1"+
+        ")")
+}
+
 func (self *database) initializeDatabase() {
-    self.runQuery("CREATE TABLE IF NOT EXISTS Apis (id INTEGER PRIMARY KEY, name text)")
+    self.runQuery("CREATE TABLE IF NOT EXISTS Apis "+
+        "(id INTEGER PRIMARY KEY, name text)")
     self.runQuery("CREATE TABLE IF NOT EXISTS Messages ("+
             "id INTEGER PRIMARY KEY,"+
             "apiId INTEGER,"+
@@ -43,7 +62,8 @@ func (self *database) initializeDatabase() {
 func (self *database) runQuery(query string) {
     statement, error := self.connection.Prepare(query)
     self.handleError(error)
-    statement.Exec()
+    _, statementError := statement.Exec()
+    self.handleError(statementError)
 }
 
 func (self *database) handleError(error error) {
