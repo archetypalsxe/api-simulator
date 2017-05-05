@@ -1,22 +1,37 @@
 package main
 
 import (
+    "fmt"
     "html/template"
     "log"
     "net/http"
     "os"
+    "strconv"
 );
 
 type settingsPage struct {
-    request *http.Request;
-    response http.ResponseWriter;
+    response http.ResponseWriter
 }
 
 func (self *settingsPage) respond() {
-    dataPath := os.Getenv("GOPATH") + "/htmlTemplates/";
+    dataPath := os.Getenv("GOPATH") + "/htmlTemplates/"
     t, error := template.ParseFiles(dataPath + "settings.html")
     if error != nil {
         log.Fatal(error)
     }
     t.Execute(self.response, map[string] string {"Title": "Whoa"})
+
+    self.getData()
+}
+
+func (self *settingsPage) getData() {
+    database := database{}
+    database.connect()
+    rows := database.getApis()
+    var id int
+    var name string
+    for rows.Next() {
+        rows.Scan(&id, &name)
+        fmt.Fprintln(self.response, strconv.Itoa(id) + ": " + name);
+    }
 }

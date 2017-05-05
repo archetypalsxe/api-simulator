@@ -25,10 +25,7 @@ func Index(response http.ResponseWriter, request *http.Request) {
 }
 
 func Settings(response http.ResponseWriter, request *http.Request) {
-    database := database{}
-    database.test()
-
-    settingsPage := settingsPage{response: response, request: request}
+    settingsPage := settingsPage{response: response}
     settingsPage.respond()
 }
 
