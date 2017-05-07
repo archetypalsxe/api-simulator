@@ -37,9 +37,8 @@ func (self *database) insertData() {
     self.runQuery("DELETE FROM Messages;")
     self.runQuery("INSERT INTO Messages (apiId, identifier, responseId) "+
         "VALUES ("+
-            //"(SELECT id FROM Apis WHERE name = 'worldspan'), "+
-            "3," +
-            "'PSC5', "+
+            "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
+            "'<PSC5>', "+
             "1"+
         ")")
 }

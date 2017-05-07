@@ -2,7 +2,6 @@ package main
 
 import (
     "fmt"
-    "html"
     "html/template"
     "log"
     "net/http"
@@ -41,13 +40,11 @@ func (self *settingsPage) getData() {
     var apiId int
     var identifier string
     var responseId int
-    rows = database.getApis()
-log.Print(rows)
+    rows = database.getMessages()
     for rows.Next() {
         rows.Scan(&id, &apiId, &identifier, &responseId)
-log.Print(identifier)
-        fmt.Fprintln(self.response, html.EscapeString(strconv.Itoa(id) +
+        fmt.Fprintln(self.response, strconv.Itoa(id) +
             " " + strconv.Itoa(apiId) + " " + identifier + " " +
-            strconv.Itoa(responseId)))
+            strconv.Itoa(responseId))
     }
 }
