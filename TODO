@@ -1,9 +1,7 @@
-Add escape key for each api
-    Beginning
-    Ending
+Insert all messages into the table?
+Format data from tables better
 
-Create Database
-    Insert into tables
+Add ability to update code without destroying & recreating Docker image
 
 Dynamically create response
     Create database
@@ -21,3 +19,5 @@ TODO's
         Done? Need to test
     Make a generic connection class
 Refactor
+Add ability to upload multiple messaging examples and be able to figure out
+    what's different and dynamic between the messages

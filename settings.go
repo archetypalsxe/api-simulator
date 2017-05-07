@@ -32,10 +32,23 @@ func (self *settingsPage) getData() {
 
     var id int
     var name string
+    var beginningEscape string
+    var endingEscape string
     for rows.Next() {
-        rows.Scan(&id, &name)
-        fmt.Fprintln(self.response, strconv.Itoa(id) + ": " + name);
+        rows.Scan(&id, &name, &beginningEscape, &endingEscape)
+        fmt.Fprintln(self.response,
+            strconv.Itoa(id) + " " + name + " " + beginningEscape +
+            " " + endingEscape)
     }
+
+    var template string
+    rows = database.getResponses()
+    for rows.Next() {
+        rows.Scan(&id, &template)
+        fmt.Fprintln(self.response,
+            strconv.Itoa(id) + " " + template)
+    }
+
 
     var apiId int
     var identifier string

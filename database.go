@@ -2,7 +2,9 @@ package main
 
 import (
     "database/sql"
+    "io/ioutil"
     "log"
+    "os"
 
     //SQLite
     _ "github.com/mattn/go-sqlite3"
@@ -31,9 +33,27 @@ func (self *database) getMessages() *sql.Rows {
     return rows
 }
 
+func (self *database) getResponses() *sql.Rows {
+    rows, error := self.connection.Query("SELECT * FROM Responses;")
+    self.handleError(error)
+    return rows
+}
+
 func (self *database) insertData() {
+    // Insert the APIs
     self.runQuery("DELETE FROM Apis;")
-    self.runQuery("INSERT INTO Apis (name) VALUES ('worldspan');")
+    self.runQuery("INSERT INTO Apis (name, beginningEscape, endingEscape) "+
+        "VALUES ('worldspan', '!--', '--!');")
+
+    // Insert the responses
+    // @TODO Should be using os.PathSeparator
+    dataPath := os.Getenv("GOPATH") + "/data/";
+    self.runQuery("DELETE FROM Responses")
+    self.runQuery("INSERT INTO Responses (template) VALUES("+
+        "'"+ self.getFileContents(dataPath + "testPowerShopperResponse") +"'"+
+        ")")
+
+    // Insert the messages
     self.runQuery("DELETE FROM Messages;")
     self.runQuery("INSERT INTO Messages (apiId, identifier, responseId) "+
         "VALUES ("+
@@ -44,8 +64,12 @@ func (self *database) insertData() {
 }
 
 func (self *database) initializeDatabase() {
-    self.runQuery("CREATE TABLE IF NOT EXISTS Apis "+
-        "(id INTEGER PRIMARY KEY, name text)")
+    self.runQuery("CREATE TABLE IF NOT EXISTS Apis ("+
+        "id INTEGER PRIMARY KEY,"+
+        "name text,"+
+        "beginningEscape text,"+
+        "endingEscape text"+
+   ")")
     self.runQuery("CREATE TABLE IF NOT EXISTS Messages ("+
             "id INTEGER PRIMARY KEY,"+
             "apiId INTEGER,"+
@@ -69,4 +93,12 @@ func (self *database) handleError(error error) {
     if (error != nil) {
         log.Fatal(error)
     }
+}
+
+func (self *database) getFileContents(responseFile string) string {
+    data, error := ioutil.ReadFile(responseFile);
+    if (error != nil) {
+        log.Fatal(error);
+    }
+    return string(data)
 }
