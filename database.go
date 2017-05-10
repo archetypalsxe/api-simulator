@@ -49,9 +49,15 @@ func (self *database) insertData() {
     // @TODO Should be using os.PathSeparator
     dataPath := os.Getenv("GOPATH") + "/data/";
     self.runQuery("DELETE FROM Responses")
-    self.runQuery("INSERT INTO Responses (template) VALUES("+
-        "'"+ self.getFileContents(dataPath + "testPowerShopperResponse") +"'"+
-        ")")
+    self.runQuery("INSERT INTO Responses (template) VALUES"+
+        "('"+self.getFileContents(dataPath+"testCardAuthorization") +"'),"+
+        "('"+self.getFileContents(dataPath+"testDisplayPnrResponse") +"'),"+
+        "('"+self.getFileContents(dataPath+"testFinished") +"'),"+
+        "('"+self.getFileContents(dataPath+"testNativeDisplayPnrResponse") +"'),"+
+        "('"+self.getFileContents(dataPath+"testPowerShopperResponse") +"'),"+
+        "('"+self.getFileContents(dataPath+"testPricingResponse") +"'),"+
+        "('"+self.getFileContents(dataPath+"testTicketingResponse") +"'),"+
+        "('"+self.getFileContents(dataPath+"testUpdatePnrResponse") +"')")
 
     // Insert the messages
     self.runQuery("DELETE FROM Messages;")
@@ -59,7 +65,7 @@ func (self *database) insertData() {
         "VALUES ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
             "'<PSC5>', "+
-            "1"+
+            "(SELECT id FROM Responses WHERE template LIKE '%PSW5%')"+
         ")")
 }
 
