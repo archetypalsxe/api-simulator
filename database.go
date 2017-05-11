@@ -64,9 +64,38 @@ func (self *database) insertData() {
     self.runQuery("INSERT INTO Messages (apiId, identifier, responseId) "+
         "VALUES ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
+            "'<HOS_CMD>CK/', "+
+            "1"+
+        "), ("+
+            "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
+            "'<DPC8>', "+
+            "2"+
+        "), ("+
+            "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
+            "'<HOS_RSP_SCR>F</HOS_RSP_SCR>', "+
+            "3"+
+        "), ("+
+            "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
+            "'<HOS_CMD>*', "+
+            "4"+
+        "), ("+
+            "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
             "'<PSC5>', "+
-            "(SELECT id FROM Responses WHERE template LIKE '%PSW5%')"+
+            "5"+
+        "), ("+
+            "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
+            "'<BPC9>', "+
+            "6"+
+        "), ("+
+            "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
+            "'<HOS_CMD>EZEI#$*', "+
+            "7"+
+        "), ("+
+            "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
+            "'<UPC7>', "+
+            "8"+
         ")")
+
 }
 
 func (self *database) initializeDatabase() {

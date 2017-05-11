@@ -1,7 +1,6 @@
-Insert all messages into the table?
-Format data from tables better
-
 Add ability to update code without destroying & recreating Docker image
+
+Format data from tables better
 
 Dynamically create response
     Create database
