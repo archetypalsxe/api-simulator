@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t temp-container .
+docker build -t temp-container --build-arg app_env=development ./

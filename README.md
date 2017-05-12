@@ -6,7 +6,7 @@
   * Either need to use sudo to the commands below, or add user to the docker group
 * golang
   * Only needed if running directly on a server or
-  * To run automated tests  or
+  * To run automated tests or
   * To compile without running in docker
 
 ## Commands for Running in a Docker Container
@@ -36,7 +36,7 @@ This was done on a CentOS 6.6 server and is pretty much documentation for myself
   * To access the code, navigate to: `http://127.0.0.1:8080/worldspan`
     * Or the server IP if it's not local in place of 127.0.0.1
   * In the main-test.go, update the IP if necessary
-    * Run `go test` to test to make sure that everything is working
+    * Run automated tests (below) to test to make sure that everything is working
 
 ## Daemonizing (init.d)
 * Copy the initd file to the appropriate folder
@@ -49,4 +49,4 @@ This was done on a CentOS 6.6 server and is pretty much documentation for myself
   * `go build *.go`
 
 ## Running Automated Tests
-* `go test`
+* `go test app/*.go`

@@ -1,11 +1,22 @@
 FROM golang
 
-ADD . /go/src/worldspan-simulator
-ADD data /go/data
-ADD htmlTemplates /go/htmlTemplates
+ARG app_env
+ENV APP_ENV $app_env
 
-RUN go get worldspan-simulator
-RUN go install worldspan-simulator
+COPY ./app /go/src/api-simulator/app
+COPY data /go/data
+COPY htmlTemplates /go/htmlTemplates
+WORKDIR /go/src/api-simulator/app
 
-ENTRYPOINT /go/bin/worldspan-simulator
+RUN go get ./
+RUN go build
+
+CMD if [ ${APP_ENV} = production ]; \
+    then \
+    app; \
+    else \
+    go get github.com/archetypalsxe/api-simulator && \
+    api-simulator; \
+    fi
+
 EXPOSE 8080
