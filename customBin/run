@@ -1,4 +1,4 @@
 #!/bin/bash
 
 PWD=${PWD}
-docker run -p 6060:8080 -v $PWD/app --name api-simulator --rm temp-container &
+docker run -p 6060:8080 -v "$PWD/app" --name api-simulator --rm temp-container &

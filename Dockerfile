@@ -13,10 +13,10 @@ RUN go build
 
 CMD if [ ${APP_ENV} = production ]; \
     then \
-    app; \
+        app; \
     else \
-    go get github.com/archetypalsxe/api-simulator && \
-    api-simulator; \
+        go get github.com/archetypalsxe/api-simulator && \
+        api-simulator; \
     fi
 
 EXPOSE 8080
