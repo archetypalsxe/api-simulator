@@ -14,7 +14,7 @@ type settingsPage struct {
 }
 
 func (self *settingsPage) respond() {
-    dataPath := os.Getenv("GOPATH") + "/htmlTemplates/"
+    dataPath := os.Getenv("GOPATH") + "/src/api-simulator/htmlTemplates/"
     t, error := template.ParseFiles(dataPath + "settings.html")
     if error != nil {
         log.Fatal(error)

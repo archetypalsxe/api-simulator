@@ -1,6 +1,3 @@
-Add ability to update code without destroying & recreating Docker image
-    Test to see if working when code is updated
-
 Format data from tables better
 
 Dynamically create response

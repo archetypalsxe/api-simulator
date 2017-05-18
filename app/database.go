@@ -47,7 +47,7 @@ func (self *database) insertData() {
 
     // Insert the responses
     // @TODO Should be using os.PathSeparator
-    dataPath := os.Getenv("GOPATH") + "/data/";
+    dataPath := os.Getenv("GOPATH") + "/src/api-simulator/data/";
     self.runQuery("DELETE FROM Responses")
     self.runQuery("INSERT INTO Responses (template) VALUES"+
         "('"+self.getFileContents(dataPath+"testCardAuthorization") +"'),"+

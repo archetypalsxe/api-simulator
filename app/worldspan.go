@@ -23,7 +23,7 @@ func (self *worldspanConnection) respond() {
     }
 
     // @TODO Should be using os.PathSeparator
-    dataPath := os.Getenv("GOPATH") + "/data/"
+    dataPath := os.Getenv("GOPATH") + "/src/api-simulator/data/"
 
     if (strings.Contains(string(body), "<PSC5>")) {
         // @TODO Also, couldn't figure out how to break up the line below

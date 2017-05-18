@@ -4,8 +4,8 @@ ARG app_env
 ENV APP_ENV $app_env
 
 COPY ./app /go/src/api-simulator/app
-COPY data /go/data
-COPY htmlTemplates /go/htmlTemplates
+COPY data /go/src/api-simulator/data
+COPY htmlTemplates /go/src/api-simulator/htmlTemplates
 WORKDIR /go/src/api-simulator/app
 
 RUN go get ./
