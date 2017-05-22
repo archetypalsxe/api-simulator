@@ -1,5 +1,7 @@
 Format data from tables better
-    Into an actual form
+    Create model for storing the database data
+        Try and display in template
+    Put into an actual form
 
 Dynamically create response
     Create database

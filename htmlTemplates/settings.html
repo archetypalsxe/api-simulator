@@ -1,2 +1,11 @@
-This is the settings page
-Title is {{.Title}}
+<body>
+    <h1>Settings</h1>
+    <h2>APIs</h2>
+    <ul>
+        {{range .ApiModels}}
+            <li>
+                Entry
+            </li>
+        {{end}}
+    </ul>
+</body>
