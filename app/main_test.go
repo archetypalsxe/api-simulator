@@ -12,84 +12,84 @@ import (
 
 func TestRootDirectory(test *testing.T) {
     sendRequestForm(test,
-        "http://localhost:6060",
+        "http://localhost:8080",
         url.Values{},
         "Root directory of the API simulator")
 }
 
 func TestSettingsPage(test *testing.T) {
     sendRequestForm(test,
-        "http://localhost:6060/settings",
+        "http://localhost:8080/settings",
         url.Values{},
         "This is the settings page")
 }
 
 func TestExampleId(test *testing.T) {
     sendRequestForm(test,
-        "http://localhost:6060/example/5",
+        "http://localhost:8080/example/5",
         url.Values{},
         "Provided ID:  5")
 }
 
 func TestWorldspanPowerShopper(test *testing.T) {
     sendRequestPost(test,
-        "http://localhost:6060/worldspan",
+        "http://localhost:8080/worldspan",
         strings.NewReader("<PSC5>"),
         "PSW5")
 }
 
 func TestWorldspanPricingResponse(test *testing.T) {
     sendRequestPost(test,
-        "http://localhost:6060/worldspan",
+        "http://localhost:8080/worldspan",
         strings.NewReader("<BPC9>"),
         "BPW9")
 }
 
 func TestWorldspanCardAuthorization(test *testing.T) {
     sendRequestPost(test,
-        "http://localhost:6060/worldspan",
+        "http://localhost:8080/worldspan",
         strings.NewReader("<HOS_CMD>CK/"),
         "OK - APVL CODE IS")
 }
 
 func TestWorldspanUpdatePnr(test *testing.T) {
     sendRequestPost(test,
-        "http://localhost:6060/worldspan",
+        "http://localhost:8080/worldspan",
         strings.NewReader("<UPC7>"),
         "UPW7")
 }
 
 func TestWorldspanDisplayPnrNative(test *testing.T) {
     sendRequestPost(test,
-        "http://localhost:6060/worldspan",
+        "http://localhost:8080/worldspan",
         strings.NewReader("<HOS_CMD>*"),
         "<HOS_RSP_SCR>M</HOS_RSP_SCR>")
 }
 
 func TestWorldspanTicketing(test *testing.T) {
     sendRequestPost(test,
-        "http://localhost:6060/worldspan",
+        "http://localhost:8080/worldspan",
         strings.NewReader("<HOS_CMD>EZEI#$*"),
         "TKT NBR")
 }
 
 func TestWorldspanCloseSession(test *testing.T) {
     sendRequestPost(test,
-        "http://localhost:6060/worldspan",
+        "http://localhost:8080/worldspan",
         strings.NewReader("<HOS_RSP_SCR>F</HOS_RSP_SCR>"),
         "<RSP_COU>0000</RSP_COU>")
 }
 
 func TestWorldspanDisplayPnr(test *testing.T) {
     sendRequestPost(test,
-        "http://localhost:6060/worldspan",
+        "http://localhost:8080/worldspan",
         strings.NewReader("<DPC8>"),
         "DPW8")
 }
 
 func TestWorldspanInvalidRequest(test *testing.T) {
     sendRequestPost(test,
-        "http://localhost:6060/worldspan",
+        "http://localhost:8080/worldspan",
         strings.NewReader("Invalid Request"),
         "Type of request not found")
 }
