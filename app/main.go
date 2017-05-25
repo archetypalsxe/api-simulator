@@ -12,34 +12,13 @@ import (
 
 func main() {
     router := mux.NewRouter().StrictSlash(true)
-    http.HandleFunc("/", Index)
-    http.HandleFunc("/settings", Settings)
-    http.HandleFunc("/example/{id}", ExampleId)
-    http.HandleFunc("/worldspan", Worldspan)
-    http.Handle("/css/", http.StripPrefix("/css/",
-        http.FileServer(http.Dir("../css"))))
-    log.Fatal(http.ListenAndServe(":8080", nil))
-
-
-    /*
-    router := mux.NewRouter().StrictSlash(true)
     router.HandleFunc("/", Index)
     router.HandleFunc("/settings", Settings)
     router.HandleFunc("/example/{id}", ExampleId)
     router.HandleFunc("/worldspan", Worldspan)
-
-    fileServer := http.FileServer(http.Dir("/go/src/api-simulator/css"))
-    router.Handle("/css/", http.StripPrefix("/css/", fileServer))
-    /*
-    router.Handle("/css/", http.StripPrefix("/css/",
+    router.PathPrefix("/css/").Handler(http.StripPrefix("/css/",
         http.FileServer(http.Dir("../css"))))
-        */
-        /*
-    router := mux.NewRouter().StrictSlash(true)
-    router.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("/go/src/api-simulator/css"))))
-    */
-    //log.Fatal(http.ListenAndServe(":8080", http.FileServer(http.Dir("/go/src/api-simulator/css"))))
-    //log.Fatal(http.ListenAndServe(":8080", router))
+    log.Fatal(http.ListenAndServe(":8080", router))
 }
 
 func Index(response http.ResponseWriter, request *http.Request) {
