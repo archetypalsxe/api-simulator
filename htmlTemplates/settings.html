@@ -4,7 +4,15 @@
     <ul>
         {{range .ApiModels}}
             <li>
-                Beginning {{.name}} End
+                <b>{{.Name}}</b>
+                <ul>
+                    <li>
+                        Beginning Escape: {{.BeginningEscape}}
+                    </li>
+                    <li>
+                        Ending Escape: {{.EndingEscape}}
+                    </li>
+                </ul>
             </li>
         {{end}}
     </ul>

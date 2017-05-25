@@ -1,12 +1,10 @@
 package main
 
 import (
-    "fmt"
     "html/template"
     "log"
     "net/http"
     "os"
-    //"strconv"
 );
 
 type settingsPage struct {
@@ -29,10 +27,6 @@ func (self *settingsPage) respond() {
     var context SettingsContext
     context = SettingsContext{ApiModels: apiModels}
 
-    for i := 0; i < 1; i++ {
-        fmt.Fprintln(self.response, apiModels[i].name)
-    }
-
     t.Execute(self.response, context)
 }
 
@@ -51,9 +45,9 @@ func (self *settingsPage) getApiModels() []apiModel {
     var endingEscape string
     for rows.Next() {
         rows.Scan(&id, &name, &beginningEscape, &endingEscape)
-        apiModels = append(apiModels, apiModel{id: id, name: name,
-                beginningEscape:beginningEscape,
-                endingEscape:endingEscape})
+        apiModels = append(apiModels, apiModel{Id: id, Name: name,
+                BeginningEscape:beginningEscape,
+                EndingEscape:endingEscape})
         }
 
     return apiModels
