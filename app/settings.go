@@ -1,7 +1,7 @@
 package main
 
 import (
-    //"fmt"
+    "fmt"
     "html/template"
     "log"
     "net/http"
@@ -26,12 +26,14 @@ func (self *settingsPage) respond() {
     }
 
     apiModels := self.getApiModels()
-    context := SettingsContext{ApiModels: apiModels}
+    var context SettingsContext
+    context = SettingsContext{ApiModels: apiModels}
 
-    //t.Execute(self.response, map[string] string {"Title": "Whoa"})
+    for i := 0; i < 1; i++ {
+        fmt.Fprintln(self.response, apiModels[i].name)
+    }
+
     t.Execute(self.response, context)
-
-    //self.getData()
 }
 
 func (self *settingsPage) getApiModels() []apiModel {
@@ -55,48 +57,4 @@ func (self *settingsPage) getApiModels() []apiModel {
         }
 
     return apiModels
-}
-
-func (self *settingsPage) getData() {
-    database := database{}
-    database.connect()
-    database.insertData()
-    rows := database.getApis()
-
-    var id int
-    var name string
-    var beginningEscape string
-    var endingEscape string
-    for rows.Next() {
-        rows.Scan(&id, &name, &beginningEscape, &endingEscape)
-        /*
-        fmt.Fprintln(self.response,
-            strconv.Itoa(id) + " " + name + " " + beginningEscape +
-            " " + endingEscape)
-            */
-    }
-
-    var template string
-    rows = database.getResponses()
-    for rows.Next() {
-        rows.Scan(&id, &template)
-        /*
-        fmt.Fprintln(self.response,
-            strconv.Itoa(id) + " " + template)
-            */
-    }
-
-
-    var apiId int
-    var identifier string
-    var responseId int
-    rows = database.getMessages()
-    for rows.Next() {
-        rows.Scan(&id, &apiId, &identifier, &responseId)
-        /*
-        fmt.Fprintln(self.response, strconv.Itoa(id) +
-            " " + strconv.Itoa(apiId) + " " + identifier + " " +
-            strconv.Itoa(responseId))
-            */
-    }
 }
