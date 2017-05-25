@@ -17,6 +17,9 @@ func main() {
     router.HandleFunc("/example/{id}", ExampleId)
     router.HandleFunc("/worldspan", Worldspan)
 
+    http.Handle("/css/", http.StripPrefix("/css/",
+        http.FileServer(http.Dir("/css"))))
+
     log.Fatal(http.ListenAndServe(":8080", router))
 }
 
