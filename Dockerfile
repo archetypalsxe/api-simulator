@@ -7,6 +7,7 @@ COPY ./app /go/src/api-simulator/app
 COPY data /go/src/api-simulator/data
 COPY htmlTemplates /go/src/api-simulator/htmlTemplates
 COPY css /go/src/api-simulator/css
+COPY js /go/src/api-simulator/js
 WORKDIR /go/src/api-simulator/app
 
 RUN go get ./
