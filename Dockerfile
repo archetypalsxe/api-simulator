@@ -11,11 +11,11 @@ COPY js /go/src/api-simulator/js
 WORKDIR /go/src/api-simulator/app
 
 RUN go get ./
-RUN go build
+RUN go build -o api-simulator
 
 CMD if [ ${APP_ENV} = production ]; \
     then \
-        app; \
+        api-simulator; \
     else \
         go get github.com/pilu/fresh && \
         fresh; \

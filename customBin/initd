@@ -19,7 +19,7 @@ app="api-simulator"
 # Start the service
 run() {
   echo -n $"Starting $app:"
-  cd /home/httpd/htdocs/vendor/go/bin;
+  cd $GOBIN;
   ./$app > /var/log/$app.log 2> /var/log/$app.err < /dev/null &
   
   sleep 1

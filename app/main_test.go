@@ -21,7 +21,7 @@ func TestSettingsPage(test *testing.T) {
     sendRequestForm(test,
         "http://localhost:8080/settings",
         url.Values{},
-        "This is the settings page")
+        "worldspan")
 }
 
 func TestExampleId(test *testing.T) {

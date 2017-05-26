@@ -24,14 +24,14 @@ This was done on a CentOS 6.6 server and is pretty much documentation for myself
 * Install golang and hg
   * `sudo yum install golang hg`
 * As root: `sudo su`
-  * Make your directory: `mkdir /home/httpd/htdocs/vendor/go`
-  * Setup your go path: `export GOPATH=/home/httpd/htdocs/vendor/go`
+  * Make your directory: `mkdir /opt/go` `mkdir /opt/go/src`
+  * Setup your go path: `export GOPATH=/opt/go`
   * (Optional) Add to the path: `PATH=$PATH:$GOPATH/bin`
   * Setup the go bin directory: `export GOBIN=$GOPATH/bin`
   * Clone the repo in the $GOPATH
     * Quite a bit can be deleted from the repo as it won't be necessary, especially the docker stuff
   * Get necessary dependencies `go get`
-  * Compile the code: `go install`
+  * Compile the code: `go build -o $GOBIN/api-simulator`
   * Run the code: `$GOBIN/api-simulator`
   * To access the code, navigate to: `http://127.0.0.1:8080/worldspan`
     * Or the server IP if it's not local in place of 127.0.0.1
