@@ -1,3 +1,7 @@
-body {
-    background-color: yellow;
+.hidden {
+    display: none;
+}
+
+.apiDisplay {
+    font-weight: bold;
 }

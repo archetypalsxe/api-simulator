@@ -5,6 +5,7 @@ import (
     "io/ioutil"
     "log"
     "os"
+    "strconv"
 
     //SQLite
     _ "github.com/mattn/go-sqlite3"
@@ -29,6 +30,13 @@ func (self *database) getApis() *sql.Rows {
 
 func (self *database) getMessages() *sql.Rows {
     rows, error := self.connection.Query("SELECT * FROM Messages;")
+    self.handleError(error)
+    return rows
+}
+
+func (self *database) getMessagesForApi(apiId int) *sql.Rows {
+    rows, error := self.connection.Query("SELECT * FROM Messages WHERE "+
+        "apiId = '"+ strconv.Itoa(apiId) +"';")
     self.handleError(error)
     return rows
 }

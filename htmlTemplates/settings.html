@@ -9,13 +9,16 @@
     <ul>
         {{range .ApiModels}}
             <li>
-                <b>{{.Name}}</b>
+                <div class="apiDisplay" data-id="{{.Id}}">{{.Name}}</div>
                 <ul>
                     <li>
                         Beginning Escape: {{.BeginningEscape}}
                     </li>
                     <li>
                         Ending Escape: {{.EndingEscape}}
+                    </li>
+                    <li>
+                        Messages
                     </li>
                 </ul>
             </li>
