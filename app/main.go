@@ -4,6 +4,7 @@ import (
     "fmt"
     "log"
     "net/http"
+    "os"
     "strings"
 
     // Third party code for routing
@@ -16,10 +17,14 @@ func main() {
     router.HandleFunc("/settings", Settings)
     router.HandleFunc("/example/{id}", ExampleId)
     router.HandleFunc("/worldspan", Worldspan)
+
+    // File servers
+    path := os.Getenv("GOPATH") + "/src/api-simulator/"
     router.PathPrefix("/css/").Handler(http.StripPrefix("/css/",
-        http.FileServer(http.Dir("../css"))))
+        http.FileServer(http.Dir(path + "css"))))
     router.PathPrefix("/js/").Handler(http.StripPrefix("/js/",
-        http.FileServer(http.Dir("../js"))))
+        http.FileServer(http.Dir(path + "/js"))))
+
     log.Fatal(http.ListenAndServe(":8080", router))
 }
 
