@@ -17,14 +17,19 @@ func (self * apiModel) loadMessages() {
     var apiId int
     var identifier string
     var responseId int
+    var responseTemplate string
 
     database := database{}
     database.connect()
     rows := database.getMessagesForApi(self.Id)
     for rows.Next() {
         rows.Scan(&id, &apiId, &identifier, &responseId)
+        responseMessages := database.getResponseMessage(responseId)
+        for responseMessages.Next() {
+            responseMessages.Scan(&responseId, &responseTemplate)
+        }
         model := messagesModel{Id: id, ApiId: apiId, Identifier:identifier,
-            ResponseId: responseId}
+            ResponseId: responseId, ResponseTemplate: responseTemplate}
         self.Messages = append(self.Messages, model)
     }
 }

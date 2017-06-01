@@ -5,4 +5,5 @@ type messagesModel struct {
     ApiId int
     Identifier string
     ResponseId int
+    ResponseTemplate string
 }
