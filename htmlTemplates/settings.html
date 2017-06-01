@@ -1,5 +1,6 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/css/settings.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/js/settings.js"></script>
 </head>
 
@@ -9,21 +10,36 @@
     <ul>
         {{range .ApiModels}}
             <li>
-                <div class="apiDisplay" data-id="{{.Id}}">{{.Name}}</div>
+                <div id="apiNameField" data-type="div" class="apiDisplay cursor" data-id="{{.Id}}">
+                    {{.Name}}
+                </div>
                 <ul>
                     <li>
-                        Beginning Escape: {{.BeginningEscape}}
+                        Beginning Escape:
+                        <span id="beginningEscapeField{{.Id}}" data-type="span" class="cursor">
+                            {{.BeginningEscape}}
+                        </span>
                     </li>
                     <li>
-                        Ending Escape: {{.EndingEscape}}
+                        Ending Escape:
+                        <span id="endingEscapeField{{.Id}}" data-type="span" class="cursor">
+                            {{.EndingEscape}}
+                        </span>
                     </li>
                     <li>
                         Messages
                         <ul>
                             {{range .Messages}}
                                 <li>
-                                    Identifier: {{.Identifier}}<br/>
-                                    Response Template: {{.ResponseTemplate}}
+                                    Identifier:
+                                    <div id="identifierField{{.Id}}" data-type="div" class="cursor">
+                                        {{.Identifier}}
+                                    </div>
+                                    <div class="responsePreContainer">
+                                        <pre data-type="pre" id="responseField{{.Id}}" class="responsePreBox cursor">
+                                            {{.ResponseTemplate}}
+                                        </pre>
+                                    </div>
                                 </li>
                             {{end}}
                         </ul>
