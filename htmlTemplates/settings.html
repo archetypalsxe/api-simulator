@@ -19,6 +19,14 @@
                     </li>
                     <li>
                         Messages
+                        <ul>
+                            {{range .Messages}}
+                                <li>
+                                    Identifier: {{.Identifier}}<br/>
+                                    ResponseId: {{.ResponseId}}
+                                </li>
+                            {{end}}
+                        </ul>
                     </li>
                 </ul>
             </li>

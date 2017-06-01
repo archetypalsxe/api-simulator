@@ -45,10 +45,11 @@ func (self *settingsPage) getApiModels() []apiModel {
     var endingEscape string
     for rows.Next() {
         rows.Scan(&id, &name, &beginningEscape, &endingEscape)
-        apiModels = append(apiModels, apiModel{Id: id, Name: name,
-                BeginningEscape:beginningEscape,
-                EndingEscape:endingEscape})
-        }
+        model := apiModel{Id: id, Name: name, BeginningEscape:beginningEscape,
+            EndingEscape:endingEscape}
+        model.loadMessages()
+        apiModels = append(apiModels, model)
+    }
 
     return apiModels
 }
