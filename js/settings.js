@@ -4,6 +4,15 @@ $(document).ready(function() {
     });
 });
 
+function saveApi() {
+    var apiName = $('#addNewApiDiv #apiName').val();
+    var beginningEscape = $('#addNewApiDiv #beginningEscape').val();
+    var endingEscape = $('#addNewApiDiv #endingEscape').val();
+    console.log(apiName);
+    console.log(beginningEscape);
+    console.log(endingEscape);
+}
+
 function clickEvent(event) {
     var target = $(event.target);
     var targetId = target.attr('id');

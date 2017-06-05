@@ -5,6 +5,17 @@
 </head>
 
 <body>
+    <a href="#addNewApiDiv">Add New API</a>
+    <div id="addNewApiDiv" class="modalDialog">
+        <div>
+            <a href="#close" title="Close" class="close">X</a>
+            <h2>Add New API</h2>
+            <div>API Name: <input id="apiName" type="text"/></div>
+            <div>Beginning Escape: <input id="beginningEscape" type="text"/></div>
+            <div>Ending Escape: <input id="endingEscape" type="text"/></div>
+            <input type="button" value="Save" onclick="saveApi()"/>
+        </div>
+    </div>
     <h1>Settings</h1>
     <h2>APIs</h2>
     <ul>
