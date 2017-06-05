@@ -15,6 +15,7 @@ func main() {
     router := mux.NewRouter().StrictSlash(true)
     router.HandleFunc("/", Index)
     router.HandleFunc("/settings", Settings)
+    router.HandleFunc("/updateSettings", UpdateSettings)
     router.HandleFunc("/example/{id}", ExampleId)
     router.HandleFunc("/worldspan", Worldspan)
 
@@ -35,6 +36,17 @@ func Index(response http.ResponseWriter, request *http.Request) {
 func Settings(response http.ResponseWriter, request *http.Request) {
     settingsPage := settingsPage{response: response}
     settingsPage.respond()
+}
+
+func UpdateSettings(response http.ResponseWriter, request *http.Request) {
+    request.ParseForm()
+
+    model := apiModel{Name: request.FormValue("apiName"),
+        BeginningEscape: request.FormValue("beginningEscape"),
+        EndingEscape: request.FormValue("endingEscape")}
+    database := database{}
+    database.connect()
+    database.insertApi(model)
 }
 
 func ExampleId(response http.ResponseWriter, request *http.Request) {

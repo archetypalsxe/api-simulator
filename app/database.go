@@ -19,7 +19,7 @@ func (self *database) connect() {
     connection, error := sql.Open("sqlite3", "./settings.db")
     self.handleError(error)
     self.connection = connection
-    self.initializeDatabase()
+    //self.initializeDatabase()
 }
 
 func (self *database) getApis() *sql.Rows {
@@ -52,6 +52,13 @@ func (self *database) getResponses() *sql.Rows {
     rows, error := self.connection.Query("SELECT * FROM Responses;")
     self.handleError(error)
     return rows
+}
+
+func (self *database) insertApi(apiModel apiModel) {
+    query := "INSERT INTO Apis (name, beginningEscape, endingEscape) "+
+        "VALUES ('"+ apiModel.Name +"', '"+ apiModel.BeginningEscape +
+        "', '"+ apiModel.EndingEscape +"');"
+    self.runQuery(query)
 }
 
 func (self *database) insertData() {

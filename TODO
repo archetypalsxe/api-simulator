@@ -1,4 +1,9 @@
+Database
+    Check to see if connected before trying to use
+    Don't initialize the database if not needed
+
 Create endpoint for managing APIs
+    Credentials
 
 Ability to create new APIs
 Ability to create new messages

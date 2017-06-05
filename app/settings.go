@@ -35,7 +35,7 @@ func (self *settingsPage) getApiModels() []apiModel {
 
     database := database{}
     database.connect()
-    database.insertData()
+    //database.insertData()
     rows := database.getApis()
 
 

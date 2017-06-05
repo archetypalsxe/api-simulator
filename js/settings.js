@@ -11,6 +11,15 @@ function saveApi() {
     console.log(apiName);
     console.log(beginningEscape);
     console.log(endingEscape);
+    $.ajax({
+        url: "/updateSettings",
+        type: "post",
+        data: {
+            apiName: apiName,
+            beginningEscape: beginningEscape,
+            endingEscape: endingEscape
+        }
+    });
 }
 
 function clickEvent(event) {
