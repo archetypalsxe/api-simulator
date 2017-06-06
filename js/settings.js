@@ -8,16 +8,29 @@ function saveApi() {
     var apiName = $('#addNewApiDiv #apiName').val();
     var beginningEscape = $('#addNewApiDiv #beginningEscape').val();
     var endingEscape = $('#addNewApiDiv #endingEscape').val();
-    console.log(apiName);
-    console.log(beginningEscape);
-    console.log(endingEscape);
     $.ajax({
         url: "/updateSettings",
         type: "post",
         data: {
+            action: "saveApi",
             apiName: apiName,
             beginningEscape: beginningEscape,
             endingEscape: endingEscape
+        }
+    });
+}
+
+function saveMessage(apiId) {
+    var identifier = $('#identifier-'+apiId).val();
+    var response = $('#response-'+apiId).val();
+    $.ajax({
+        url: "/updateSettings",
+        type: "post",
+        data: {
+            action: "saveMessage",
+            apiId: apiId,
+            identifier: identifier,
+            response: response
         }
     });
 }

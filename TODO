@@ -1,3 +1,5 @@
+Response from AJAX requests
+
 Database
     Check to see if connected before trying to use
     Don't initialize the database if not needed
@@ -5,9 +7,9 @@ Database
 Create endpoint for managing APIs
     Credentials
 
-Ability to create new APIs
-Ability to create new messages
-Ability to create new responses
+Decouple messages and responses in dataobject
+    messages model should have an array of responses
+
 Save changes that are made on the form
 
 Dynamically create response

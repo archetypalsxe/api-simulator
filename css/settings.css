@@ -1,3 +1,7 @@
+label textarea {
+    vertical-align: middle;
+}
+
 .modalDialog {
     position: fixed;
     top: 0;

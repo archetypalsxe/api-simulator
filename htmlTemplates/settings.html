@@ -38,7 +38,16 @@
                         </span>
                     </li>
                     <li>
-                        Messages
+                        Messages <a href="#addNewMessage-{{.Id}}">Add New Message</a>
+                        <div id="addNewMessage-{{.Id}}" class="modalDialog">
+                            <div>
+                                <a href="#close" title="Close" class="close">X</a>
+                                <h2>Adding New Message for {{.Name}}</h2>
+                                <div>Identifier: <input id="identifier-{{.Id}}" type="text"/></div>
+                                <div><label>Response Message: <textarea id="response-{{.Id}}"></textarea></label></div>
+                                <input type="button" value="Save" onclick="saveMessage({{.Id}})"/>
+                            </div>
+                        </div>
                         <ul>
                             {{range .Messages}}
                                 <li>

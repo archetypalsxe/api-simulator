@@ -5,6 +5,7 @@ import (
     "log"
     "net/http"
     "os"
+    "strconv"
     "strings"
 
     // Third party code for routing
@@ -38,15 +39,38 @@ func Settings(response http.ResponseWriter, request *http.Request) {
     settingsPage.respond()
 }
 
+// Handles Ajax requests for updating various settings
 func UpdateSettings(response http.ResponseWriter, request *http.Request) {
     request.ParseForm()
 
+    switch request.FormValue("action") {
+        case "saveApi":
+            saveApiFromForm(request)
+        case "saveMessage":
+            saveMessageFromForm(request)
+        default:
+            panic("Invalid action requested")
+    }
+}
+
+// Save an API that was entered on the settings page
+func saveApiFromForm(request *http.Request) {
     model := apiModel{Name: request.FormValue("apiName"),
         BeginningEscape: request.FormValue("beginningEscape"),
         EndingEscape: request.FormValue("endingEscape")}
     database := database{}
     database.connect()
     database.insertApi(model)
+}
+
+func saveMessageFromForm(request *http.Request) {
+    apiId, _ := strconv.Atoi(request.FormValue("apiId"))
+    model := messagesModel{ApiId: apiId,
+        Identifier: request.FormValue("identifier"),
+        ResponseTemplate: request.FormValue("response")}
+    database := database{}
+    database.connect()
+    database.insertMessage(model)
 }
 
 func ExampleId(response http.ResponseWriter, request *http.Request) {

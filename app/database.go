@@ -54,11 +54,29 @@ func (self *database) getResponses() *sql.Rows {
     return rows
 }
 
+/// Insert the provided API into the database
 func (self *database) insertApi(apiModel apiModel) {
     query := "INSERT INTO Apis (name, beginningEscape, endingEscape) "+
         "VALUES ('"+ apiModel.Name +"', '"+ apiModel.BeginningEscape +
         "', '"+ apiModel.EndingEscape +"');"
     self.runQuery(query)
+}
+
+// Insert the provided message (and response(s)) in the database
+func (self *database) insertMessage(messagesModel messagesModel) {
+    query := "INSERT INTO Responses (template) VALUES "+
+        "('"+ messagesModel.ResponseTemplate +"')"
+    response := self.runQuery(query)
+    responseId, _ := response.LastInsertId()
+    // @TODO This could become an issue in the future, converting int64 to int
+    responseIdString := strconv.Itoa(int(responseId))
+    apiIdString := strconv.Itoa(messagesModel.ApiId)
+    self.runQuery("INSERT INTO Messages (apiId, identifier, responseId) "+
+        "VALUES ("+
+            "'"+ apiIdString +"', "+
+            "'"+ messagesModel.Identifier +"', "+
+            responseIdString +
+        ")")
 }
 
 func (self *database) insertData() {
@@ -139,11 +157,12 @@ func (self *database) initializeDatabase() {
         ")")
 }
 
-func (self *database) runQuery(query string) {
+func (self *database) runQuery(query string) sql.Result {
     statement, error := self.connection.Prepare(query)
     self.handleError(error)
-    _, statementError := statement.Exec()
+    response, statementError := statement.Exec()
     self.handleError(statementError)
+    return response
 }
 
 func (self *database) handleError(error error) {
