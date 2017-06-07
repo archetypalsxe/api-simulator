@@ -1,6 +1,7 @@
 package main
 
 import (
+    "encoding/json"
     "fmt"
     "log"
     "net/http"
@@ -45,32 +46,37 @@ func UpdateSettings(response http.ResponseWriter, request *http.Request) {
 
     switch request.FormValue("action") {
         case "saveApi":
-            saveApiFromForm(request)
+            saveApiFromForm(request, response)
         case "saveMessage":
-            saveMessageFromForm(request)
+            saveMessageFromForm(request, response)
         default:
             panic("Invalid action requested")
     }
 }
 
 // Save an API that was entered on the settings page
-func saveApiFromForm(request *http.Request) {
+func saveApiFromForm(request *http.Request, response http.ResponseWriter) {
     model := apiModel{Name: request.FormValue("apiName"),
         BeginningEscape: request.FormValue("beginningEscape"),
         EndingEscape: request.FormValue("endingEscape")}
     database := database{}
     database.connect()
-    database.insertApi(model)
+    result := database.insertApi(model)
+    ajaxResponse := ajaxResponse{Status: result, Error: "None"}
+    json.NewEncoder(response).Encode(ajaxResponse)
 }
 
-func saveMessageFromForm(request *http.Request) {
+// Saves a messgae that was entered on the settings page
+func saveMessageFromForm(request *http.Request, response http.ResponseWriter) {
     apiId, _ := strconv.Atoi(request.FormValue("apiId"))
     model := messagesModel{ApiId: apiId,
         Identifier: request.FormValue("identifier"),
         ResponseTemplate: request.FormValue("response")}
     database := database{}
     database.connect()
-    database.insertMessage(model)
+    result := database.insertMessage(model)
+    ajaxResponse := ajaxResponse{Status: result, Error: "None"}
+    json.NewEncoder(response).Encode(ajaxResponse)
 }
 
 func ExampleId(response http.ResponseWriter, request *http.Request) {

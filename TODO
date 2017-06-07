@@ -1,5 +1,3 @@
-Response from AJAX requests
-
 Database
     Check to see if connected before trying to use
     Don't initialize the database if not needed

@@ -55,15 +55,17 @@ func (self *database) getResponses() *sql.Rows {
 }
 
 /// Insert the provided API into the database
-func (self *database) insertApi(apiModel apiModel) {
+func (self *database) insertApi(apiModel apiModel) bool {
     query := "INSERT INTO Apis (name, beginningEscape, endingEscape) "+
         "VALUES ('"+ apiModel.Name +"', '"+ apiModel.BeginningEscape +
         "', '"+ apiModel.EndingEscape +"');"
-    self.runQuery(query)
+    result := self.runQuery(query)
+    rowsAffected, _ := result.RowsAffected()
+    return rowsAffected > 0
 }
 
 // Insert the provided message (and response(s)) in the database
-func (self *database) insertMessage(messagesModel messagesModel) {
+func (self *database) insertMessage(messagesModel messagesModel) bool {
     query := "INSERT INTO Responses (template) VALUES "+
         "('"+ messagesModel.ResponseTemplate +"')"
     response := self.runQuery(query)
@@ -71,12 +73,14 @@ func (self *database) insertMessage(messagesModel messagesModel) {
     // @TODO This could become an issue in the future, converting int64 to int
     responseIdString := strconv.Itoa(int(responseId))
     apiIdString := strconv.Itoa(messagesModel.ApiId)
-    self.runQuery("INSERT INTO Messages (apiId, identifier, responseId) "+
+    insertResult := self.runQuery("INSERT INTO Messages (apiId, identifier, responseId) "+
         "VALUES ("+
             "'"+ apiIdString +"', "+
             "'"+ messagesModel.Identifier +"', "+
             responseIdString +
         ")")
+    rowsAffected, _ := insertResult.RowsAffected()
+    return rowsAffected > 0
 }
 
 func (self *database) insertData() {

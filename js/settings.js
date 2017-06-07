@@ -17,6 +17,14 @@ function saveApi() {
             beginningEscape: beginningEscape,
             endingEscape: endingEscape
         }
+    }).done(function(response) {
+        var json = $.parseJSON(response);
+        if(json.Status) {
+            window.location = "#close";
+            window.location.reload();
+        } else {
+            alert("There was an error saving!");
+        }
     });
 }
 
@@ -31,6 +39,14 @@ function saveMessage(apiId) {
             apiId: apiId,
             identifier: identifier,
             response: response
+        }
+    }).done(function(response) {
+        var json = $.parseJSON(response);
+        if(json.Status) {
+            window.location = "#close";
+            window.location.reload();
+        } else {
+            alert("There was an error saving!");
         }
     });
 }
