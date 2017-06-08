@@ -4,10 +4,28 @@ $(document).ready(function() {
     });
 });
 
+function updateElement(target) {
+    var targetId = target.attr('id');
+    console.log(target.val());
+    console.log(target);
+    // @TODO Consolidate code
+    $.ajax({
+        url: "/updateSettings",
+        type: "post",
+        data: {
+            action: "updateField",
+            id: targetId,
+            value: target.val()
+        }
+    }).done(function(response) {
+    });
+}
+
 function saveApi() {
     var apiName = $('#addNewApiDiv #apiName').val();
     var beginningEscape = $('#addNewApiDiv #beginningEscape').val();
     var endingEscape = $('#addNewApiDiv #endingEscape').val();
+    // @TODO Consolidate code
     $.ajax({
         url: "/updateSettings",
         type: "post",
@@ -80,18 +98,22 @@ function clickEvent(event) {
 
 function blurEvent(event) {
     var target = $(event.target);
-    var targetId = target.attr('id');
-
     var confirmResult = window.confirm("Save changes?");
 
-    target.replaceWith($('<'+target.data('type')+'/>', {
-        'id': targetId,
-        'class': target.attr('class'),
-        'text': ((confirmResult) ? target.val() : target.data('original')),
-        'data-type': target.data('type')
-    }));
-    var target = $('#'+targetId);
-    target.click(function(event) {
-        clickEvent(event);
-    });
+    if(confirmResult) {
+        updateElement(target);
+    } else {
+        var targetId = target.attr('id');
+        // @TODO Move into function
+        target.replaceWith($('<'+target.data('type')+'/>', {
+            'id': targetId,
+            'class': target.attr('class'),
+            'text': ((confirmResult) ? target.val() : target.data('original')),
+            'data-type': target.data('type')
+        }));
+        var target = $('#'+targetId);
+        target.click(function(event) {
+            clickEvent(event);
+        });
+    }
 }

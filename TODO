@@ -1,14 +1,8 @@
-Database
-    Check to see if connected before trying to use
-    Don't initialize the database if not needed
-
 Create endpoint for managing APIs
     Credentials
 
 Decouple messages and responses in dataobject
     messages model should have an array of responses
-
-Save changes that are made on the form
 
 Dynamically create response
     Create database

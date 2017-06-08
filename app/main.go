@@ -49,9 +49,19 @@ func UpdateSettings(response http.ResponseWriter, request *http.Request) {
             saveApiFromForm(request, response)
         case "saveMessage":
             saveMessageFromForm(request, response)
+        case "updateField":
+            updateFieldFromForm(request, response)
         default:
-            panic("Invalid action requested")
+            log.Fatal("Invalid action requested")
     }
+}
+
+// Save a provided field that was entered on the form
+func updateFieldFromForm(request *http.Request, response http.ResponseWriter) {
+    id := request.FormValue("id")
+    value := request.FormValue("value")
+    log.Print(id)
+    log.Print(value)
 }
 
 // Save an API that was entered on the settings page
