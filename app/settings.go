@@ -39,14 +39,9 @@ func (self *settingsPage) getApiModels() []apiModel {
     rows := database.getApis()
 
 
-    var id int
-    var name string
-    var beginningEscape string
-    var endingEscape string
     for rows.Next() {
-        rows.Scan(&id, &name, &beginningEscape, &endingEscape)
-        model := apiModel{Id: id, Name: name, BeginningEscape:beginningEscape,
-            EndingEscape:endingEscape}
+        model := apiModel{}
+        model.loadFromRow(rows)
         model.loadMessages()
         apiModels = append(apiModels, model)
     }

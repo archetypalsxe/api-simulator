@@ -1,6 +1,3 @@
-Create endpoint for managing APIs
-    Credentials
-
 Decouple messages and responses in dataobject
     messages model should have an array of responses
 

@@ -6,6 +6,7 @@ import (
     "log"
     "net/http"
     "os"
+    "regexp"
     "strconv"
     "strings"
 
@@ -60,8 +61,38 @@ func UpdateSettings(response http.ResponseWriter, request *http.Request) {
 func updateFieldFromForm(request *http.Request, response http.ResponseWriter) {
     id := request.FormValue("id")
     value := request.FormValue("value")
-    log.Print(id)
-    log.Print(value)
+
+    fmt.Print(value)
+
+    // Get the ID from the id
+    regExNums := regexp.MustCompile("[0-9]+")
+    numbers := regExNums.FindAllString(id, -1)
+    if(len(numbers) > 0) {
+        databaseId := numbers[len(numbers)-1]
+        log.Print(databaseId)
+    }
+
+    // Get the field name from the id
+    regExLetters := regexp.MustCompile("[A-Za-z]+")
+    letters := regExLetters.FindAllString(id, 1)
+    if(len(letters) < 1) {
+        log.Fatal("Did not have any letters in the id field")
+    }
+    fieldName := letters[0]
+    log.Print(fieldName)
+
+    switch fieldName {
+        case "responseField":
+            log.Print("Response field")
+        case "identifierField":
+            log.Print("Message field")
+        case "apiNameField":
+        case "beginningEscapeField":
+        case "endingEscapeField":
+            log.Print("API field")
+        default:
+            log.Fatal("Unknown field provided")
+    }
 }
 
 // Save an API that was entered on the settings page

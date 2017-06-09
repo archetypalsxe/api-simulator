@@ -1,5 +1,9 @@
 package main
 
+import (
+    "database/sql"
+)
+
 type apiModel struct {
     Id int
     Name string
@@ -32,4 +36,8 @@ func (self * apiModel) loadMessages() {
             ResponseId: responseId, ResponseTemplate: responseTemplate}
         self.Messages = append(self.Messages, model)
     }
+}
+
+func (self * apiModel) loadFromRow(row *sql.Rows) {
+    row.Scan(&self.Id, &self.Name, &self.BeginningEscape, &self.EndingEscape)
 }
