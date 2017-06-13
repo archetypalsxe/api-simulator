@@ -28,9 +28,9 @@ func (self *database) getApis() *sql.Rows {
     return rows
 }
 
-func (self *database) getApi(apiId int) *sql.Rows {
+func (self *database) getApi(apiId string) *sql.Rows {
     rows, error := self.connection.Query("SELECT * FROM Apis WHERE "+
-        "apiId = '"+ strconv.Itoa(apiId) + "';")
+        "id = '"+ apiId + "';")
     self.handleError(error)
     return rows
 }
@@ -59,6 +59,16 @@ func (self *database) getResponses() *sql.Rows {
     rows, error := self.connection.Query("SELECT * FROM Responses;")
     self.handleError(error)
     return rows
+}
+
+func (self *database) updateApi(apiModel apiModel) bool {
+    query := "UPDATE Apis SET name = '"+ apiModel.Name +
+        "', beginningEscape = '"+ apiModel.BeginningEscape +
+        "', endingEscape = '"+ apiModel.EndingEscape +
+        "' WHERE id = "+ strconv.Itoa(apiModel.Id) +";"
+    result := self.runQuery(query)
+    rowsAffected, _ := result.RowsAffected()
+    return rowsAffected > 0
 }
 
 /// Insert the provided API into the database

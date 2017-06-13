@@ -6,8 +6,6 @@ $(document).ready(function() {
 
 function updateElement(target) {
     var targetId = target.attr('id');
-    console.log(target.val());
-    console.log(target);
     // @TODO Consolidate code
     $.ajax({
         url: "/updateSettings",
@@ -18,6 +16,7 @@ function updateElement(target) {
             value: target.val()
         }
     }).done(function(response) {
+        console.log(response);
     });
 }
 

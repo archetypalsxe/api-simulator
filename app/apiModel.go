@@ -41,3 +41,13 @@ func (self * apiModel) loadMessages() {
 func (self * apiModel) loadFromRow(row *sql.Rows) {
     row.Scan(&self.Id, &self.Name, &self.BeginningEscape, &self.EndingEscape)
 }
+
+// Load up an API model (self) with the provided ID
+func (self * apiModel) loadFromId(id string) {
+    database := database{}
+    database.connect()
+    rows := database.getApi(id)
+    for rows.Next() {
+        self.loadFromRow(rows)
+    }
+}

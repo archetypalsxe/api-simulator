@@ -62,14 +62,12 @@ func updateFieldFromForm(request *http.Request, response http.ResponseWriter) {
     id := request.FormValue("id")
     value := request.FormValue("value")
 
-    fmt.Print(value)
-
     // Get the ID from the id
     regExNums := regexp.MustCompile("[0-9]+")
     numbers := regExNums.FindAllString(id, -1)
+    var databaseId string
     if(len(numbers) > 0) {
-        databaseId := numbers[len(numbers)-1]
-        log.Print(databaseId)
+        databaseId = numbers[len(numbers)-1]
     }
 
     // Get the field name from the id
@@ -79,17 +77,26 @@ func updateFieldFromForm(request *http.Request, response http.ResponseWriter) {
         log.Fatal("Did not have any letters in the id field")
     }
     fieldName := letters[0]
-    log.Print(fieldName)
 
     switch fieldName {
         case "responseField":
             log.Print("Response field")
         case "identifierField":
             log.Print("Message field")
-        case "apiNameField":
-        case "beginningEscapeField":
-        case "endingEscapeField":
-            log.Print("API field")
+        case "apiNameField", "beginningEscapeField", "endingEscapeField":
+            apiModel := apiModel{}
+            apiModel.loadFromId(databaseId)
+            switch fieldName {
+                case "apiNameField":
+                    apiModel.Name = value
+                case "beginningEscapeField":
+                    apiModel.BeginningEscape = value
+                case "endingEscapeField":
+                    apiModel.EndingEscape = value
+            }
+            database := database{}
+            database.connect()
+            database.updateApi(apiModel)
         default:
             log.Fatal("Unknown field provided")
     }
