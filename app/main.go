@@ -82,7 +82,13 @@ func updateFieldFromForm(request *http.Request, response http.ResponseWriter) {
         case "responseField":
             log.Print("Response field")
         case "identifierField":
-            log.Print("Message field")
+            model := messagesModel{}
+            id, _ := strconv.Atoi(databaseId)
+            model.loadFromId(id)
+            model.Identifier = value
+            database := database{}
+            database.connect()
+            database.updateMessages(model)
         case "apiNameField", "beginningEscapeField", "endingEscapeField":
             apiModel := apiModel{}
             apiModel.loadFromId(databaseId)

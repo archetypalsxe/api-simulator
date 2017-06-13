@@ -41,6 +41,14 @@ func (self *database) getMessages() *sql.Rows {
     return rows
 }
 
+func (self *database) getMessagesById(messageId int) *sql.Rows {
+    query := "SELECT * FROM Messages WHERE id = "+
+        strconv.Itoa(messageId) +";"
+    rows, error := self.connection.Query(query)
+    self.handleError(error)
+    return rows
+}
+
 func (self *database) getMessagesForApi(apiId int) *sql.Rows {
     rows, error := self.connection.Query("SELECT * FROM Messages WHERE "+
         "apiId = '"+ strconv.Itoa(apiId) +"';")
@@ -66,6 +74,15 @@ func (self *database) updateApi(apiModel apiModel) bool {
         "', beginningEscape = '"+ apiModel.BeginningEscape +
         "', endingEscape = '"+ apiModel.EndingEscape +
         "' WHERE id = "+ strconv.Itoa(apiModel.Id) +";"
+    result := self.runQuery(query)
+    rowsAffected, _ := result.RowsAffected()
+    return rowsAffected > 0
+}
+
+// Updating a provided message in the database
+func (self *database) updateMessages(model messagesModel) bool {
+    query := "UPDATE Messages SET identifier = '"+ model.Identifier +
+        "';"
     result := self.runQuery(query)
     rowsAffected, _ := result.RowsAffected()
     return rowsAffected > 0
