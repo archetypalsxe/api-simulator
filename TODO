@@ -1,6 +1,3 @@
-Decouple messages and responses in dataobject
-    messages model should have an array of responses
-
 Dynamically create response
     Create database
         APIs (Worldspan)
@@ -10,7 +7,6 @@ Dynamically create response
             Static
             Dynamic Fields in the response
         Pull fields from request
-Create page for modifying database settings
 TODO's
     Move Worldspan into it's own class
         Done? Need to test
