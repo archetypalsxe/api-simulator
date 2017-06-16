@@ -177,6 +177,10 @@ func (self *database) insertData() {
 }
 
 func (self *database) initializeDatabase() {
+    self.runQuery("DROP TABLE IF EXISTS Apis;");
+    self.runQuery("DROP TABLE IF EXISTS Messages;");
+    self.runQuery("DROP TABLE IF EXISTS Responses;");
+    self.runQuery("DROP TABLE IF EXISTS MessagesResponsesMap;");
     self.runQuery("CREATE TABLE IF NOT EXISTS Apis ("+
         "id INTEGER PRIMARY KEY,"+
         "name text,"+
@@ -186,12 +190,18 @@ func (self *database) initializeDatabase() {
     self.runQuery("CREATE TABLE IF NOT EXISTS Messages ("+
             "id INTEGER PRIMARY KEY,"+
             "apiId INTEGER,"+
-            "identifier TEXT,"+
-            "responseId INTEGER"+
+            "identifier TEXT"+
         ")")
     self.runQuery("CREATE TABLE IF NOT EXISTS Responses ("+
             "id INTEGER PRIMARY KEY,"+
             "template TEXT"+
+        ")")
+    self.runQuery("CREATE TABLE IF NOT EXISTS  MessagesResponsesMap ("+
+        "messagesId INTEGER NOT NULL,"+
+        "responsesId INTEGER NOT NULL,"+
+        "`default` INTEGER DEFAULT 1 NOT NULL,"+
+        "condition TEXT,"+
+        "PRIMARY KEY(messagesId, responsesId)"+
         ")")
 }
 
