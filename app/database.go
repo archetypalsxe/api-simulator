@@ -139,41 +139,35 @@ func (self *database) insertData() {
 
     // Insert the messages
     self.runQuery("DELETE FROM Messages;")
-    self.runQuery("INSERT INTO Messages (apiId, identifier, responseId) "+
+    self.runQuery("INSERT INTO Messages (apiId, identifier) "+
         "VALUES ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
-            "'<HOS_CMD>CK/', "+
-            "1"+
+            "'<HOS_CMD>CK/'"+
         "), ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
-            "'<DPC8>', "+
-            "2"+
+            "'<DPC8>'"+
         "), ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
-            "'<HOS_RSP_SCR>F</HOS_RSP_SCR>', "+
-            "3"+
+            "'<HOS_RSP_SCR>F</HOS_RSP_SCR>'"+
         "), ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
-            "'<HOS_CMD>*', "+
-            "4"+
+            "'<HOS_CMD>*'"+
         "), ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
-            "'<PSC5>', "+
-            "5"+
+            "'<PSC5>'"+
         "), ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
-            "'<BPC9>', "+
-            "6"+
+            "'<BPC9>'"+
         "), ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
-            "'<HOS_CMD>EZEI#$*', "+
-            "7"+
+            "'<HOS_CMD>EZEI#$*'"+
         "), ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
-            "'<UPC7>', "+
-            "8"+
+            "'<UPC7>'"+
         ")")
-
+    self.runQuery("INSERT INTO MessagesResponsesMap (messagesId, responsesId) "+
+        "VALUES "+
+            "(1, 1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8);")
 }
 
 func (self *database) initializeDatabase() {
