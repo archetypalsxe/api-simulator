@@ -56,6 +56,14 @@ func (self *database) getMessagesForApi(apiId int) *sql.Rows {
     return rows
 }
 
+func (self *database) getResponsesForMessage(messageId int) *sql.Rows {
+    rows, error := self.connection.Query("SELECT id, template, `default`, condition "+
+        "FROM MessagesResponsesMap INNER JOIN Responses "+
+        "ON responsesId = id WHERE messagesId = '"+ strconv.Itoa(messageId) +"';")
+    self.handleError(error)
+    return rows
+}
+
 func (self *database) getResponseMessage(responseId int) *sql.Rows {
     rows, error := self.connection.Query("SELECT * FROM Responses WHERE "+
         "id = '"+ strconv.Itoa(responseId) +"';")

@@ -23,6 +23,7 @@ func (self * apiModel) loadMessages() {
     for rows.Next() {
         model := messagesModel{}
         model.loadFromRow(rows)
+        model.loadResponses()
         self.Messages = append(self.Messages, model)
     }
 }

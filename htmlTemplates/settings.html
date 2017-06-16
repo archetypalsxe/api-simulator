@@ -55,11 +55,15 @@
                                     <div id="identifierField{{.Id}}" data-type="div" class="cursor">
                                         {{.Identifier}}
                                     </div>
-                                    <div class="responsePreContainer">
-                                        <pre data-type="pre" id="responseField{{.Id}}" class="responsePreBox cursor">
-                                            {{.ResponseTemplate}}
-                                        </pre>
-                                    </div>
+                                    <ul>
+                                        {{range .Responses}}
+                                            <div class="responsePreContainer">
+                                                <pre data-type="pre" id="responseField{{.Id}}" class="responsePreBox cursor">
+                                                    {{.Template}}
+                                                </pre>
+                                            </div>
+                                        {{end}}
+                                    </ul>
                                 </li>
                             {{end}}
                         </ul>
