@@ -17,23 +17,12 @@ type apiModel struct {
     this is set, or else we don't know where in the database to search
 */
 func (self * apiModel) loadMessages() {
-    var id int
-    var apiId int
-    var identifier string
-    var responseId int
-    var responseTemplate string
-
     database := database{}
     database.connect()
     rows := database.getMessagesForApi(self.Id)
     for rows.Next() {
-        rows.Scan(&id, &apiId, &identifier, &responseId)
-        responseMessages := database.getResponseMessage(responseId)
-        for responseMessages.Next() {
-            responseMessages.Scan(&responseId, &responseTemplate)
-        }
-        model := messagesModel{Id: id, ApiId: apiId, Identifier:identifier,
-            ResponseId: responseId, ResponseTemplate: responseTemplate}
+        model := messagesModel{}
+        model.loadFromRow(rows)
         self.Messages = append(self.Messages, model)
     }
 }

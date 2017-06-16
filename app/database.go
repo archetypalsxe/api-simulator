@@ -99,7 +99,9 @@ func (self *database) insertApi(apiModel apiModel) bool {
 }
 
 // Insert the provided message (and response(s)) in the database
+// @TODO Needs to be redone
 func (self *database) insertMessage(messagesModel messagesModel) bool {
+    /*
     query := "INSERT INTO Responses (template) VALUES "+
         "('"+ messagesModel.ResponseTemplate +"')"
     response := self.runQuery(query)
@@ -115,6 +117,8 @@ func (self *database) insertMessage(messagesModel messagesModel) bool {
         ")")
     rowsAffected, _ := insertResult.RowsAffected()
     return rowsAffected > 0
+    */
+    return true
 }
 
 func (self *database) insertData() {
