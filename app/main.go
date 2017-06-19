@@ -122,18 +122,14 @@ func saveApiFromForm(request *http.Request, response http.ResponseWriter) {
 
 // Saves a messgae that was entered on the settings page
 func saveMessageFromForm(request *http.Request, response http.ResponseWriter) {
-    // @TODO Needs to be redone when saving
-    /*
     apiId, _ := strconv.Atoi(request.FormValue("apiId"))
     model := messagesModel{ApiId: apiId,
-        Identifier: request.FormValue("identifier"),
-        ResponseTemplate: request.FormValue("response")}
+        Identifier: request.FormValue("identifier")}
     database := database{}
     database.connect()
     result := database.insertMessage(model)
     ajaxResponse := ajaxResponse{Status: result, Error: "None"}
     json.NewEncoder(response).Encode(ajaxResponse)
-    */
 }
 
 func ExampleId(response http.ResponseWriter, request *http.Request) {

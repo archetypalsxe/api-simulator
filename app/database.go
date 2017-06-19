@@ -107,26 +107,21 @@ func (self *database) insertApi(apiModel apiModel) bool {
 }
 
 // Insert the provided message (and response(s)) in the database
-// @TODO Needs to be redone
 func (self *database) insertMessage(messagesModel messagesModel) bool {
     /*
     query := "INSERT INTO Responses (template) VALUES "+
         "('"+ messagesModel.ResponseTemplate +"')"
     response := self.runQuery(query)
     responseId, _ := response.LastInsertId()
-    // @TODO This could become an issue in the future, converting int64 to int
-    responseIdString := strconv.Itoa(int(responseId))
+    */
     apiIdString := strconv.Itoa(messagesModel.ApiId)
-    insertResult := self.runQuery("INSERT INTO Messages (apiId, identifier, responseId) "+
+    insertResult := self.runQuery("INSERT INTO Messages (apiId, identifier) "+
         "VALUES ("+
             "'"+ apiIdString +"', "+
-            "'"+ messagesModel.Identifier +"', "+
-            responseIdString +
+            "'"+ messagesModel.Identifier +"'"+
         ")")
     rowsAffected, _ := insertResult.RowsAffected()
     return rowsAffected > 0
-    */
-    return true
 }
 
 func (self *database) insertData() {
