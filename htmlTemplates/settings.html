@@ -44,7 +44,6 @@
                                 <a href="#close" title="Close" class="close">X</a>
                                 <h2>Adding New Message for {{.Name}}</h2>
                                 <div>Identifier: <input id="identifier-{{.Id}}" type="text"/></div>
-                                <!--<div><label>Response Message: <textarea id="response-{{.Id}}"></textarea></label></div> -->
                                 <input type="button" value="Save" onclick="saveMessage({{.Id}})"/>
                             </div>
                         </div>
@@ -56,6 +55,32 @@
                                         {{.Identifier}}
                                     </div>
                                     <ul>
+                                        <a href="#addNewResponse-{{.Id}}">Add New Response</a>
+                                        <div id="addNewResponse-{{.Id}}" class="modalDialog">
+                                            <div>
+                                                <a href="#close" title="Close" class="close">X</a>
+                                                <h2>Adding New Response: {{.Identifier}}</h2>
+                                                <div><label>Template: <textarea id="response-{{.Id}}"></textarea></label></div>
+                                                <div>
+                                                    Default?
+                                                    <select id="default-{{.Id}}">
+                                                        <option value=1
+                                                        {{if .Responses}}
+                                                        {{else}}
+                                                            selected=selected
+                                                        {{end}}
+                                                        >Yes</option>
+                                                        <option value=0
+                                                        {{if .Responses}}
+                                                            selected=selected
+                                                        {{end}}
+                                                        >No</option>
+                                                    </select>
+                                                </div>
+                                                <div>Condition: <input id="condition-{{.Id}}" type="text"/></div>
+                                                <input type="button" value="Save" onclick="saveResponse({{.Id}})"/>
+                                            </div>
+                                        </div>
                                         {{range .Responses}}
                                             <div class="responsePreContainer">
                                                 <pre data-type="pre" id="responseField{{.Id}}" class="responsePreBox cursor">

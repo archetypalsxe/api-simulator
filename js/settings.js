@@ -47,15 +47,38 @@ function saveApi() {
 
 function saveMessage(apiId) {
     var identifier = $('#identifier-'+apiId).val();
-    var response = $('#response-'+apiId).val();
     $.ajax({
         url: "/updateSettings",
         type: "post",
         data: {
             action: "saveMessage",
             apiId: apiId,
-            identifier: identifier,
-            response: response
+            identifier: identifier
+        }
+    }).done(function(response) {
+        var json = $.parseJSON(response);
+        if(json.Status) {
+            window.location = "#close";
+            window.location.reload();
+        } else {
+            alert("There was an error saving!");
+        }
+    });
+}
+
+function saveResponse(messageId) {
+    var response = $('#response-'+messageId).val();
+    var isDefault = $('#default-'+messageId).val();
+    var condition = $('#condition-'+messageId).val();
+    $.ajax({
+        url: "/updateSettings",
+        type: "post",
+        data: {
+            action: "saveResponse",
+            messageId: messageId,
+            response: response,
+            isDefault: isDefault,
+            condition: condition
         }
     }).done(function(response) {
         var json = $.parseJSON(response);

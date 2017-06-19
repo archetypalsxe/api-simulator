@@ -50,6 +50,8 @@ func UpdateSettings(response http.ResponseWriter, request *http.Request) {
             saveApiFromForm(request, response)
         case "saveMessage":
             saveMessageFromForm(request, response)
+        case "saveResponse":
+            saveResponseFromForm(request, response)
         case "updateField":
             updateFieldFromForm(request, response)
         default:
@@ -128,6 +130,21 @@ func saveMessageFromForm(request *http.Request, response http.ResponseWriter) {
     database := database{}
     database.connect()
     result := database.insertMessage(model)
+    ajaxResponse := ajaxResponse{Status: result, Error: "None"}
+    json.NewEncoder(response).Encode(ajaxResponse)
+}
+
+// Save the response that was received from the submitted form
+func saveResponseFromForm(request *http.Request, response http.ResponseWriter) {
+    messageId, _ := strconv.Atoi(request.FormValue("messageId"))
+    isDefault, _ := strconv.ParseBool(request.FormValue("isDefault"))
+    model := responsesModel {MessageId: messageId,
+        Template: request.FormValue("response"),
+        Default: isDefault,
+        Condition: request.FormValue("condition")}
+    database := database{}
+    database.connect()
+    result := database.insertResponse(model)
     ajaxResponse := ajaxResponse{Status: result, Error: "None"}
     json.NewEncoder(response).Encode(ajaxResponse)
 }

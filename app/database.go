@@ -106,14 +106,8 @@ func (self *database) insertApi(apiModel apiModel) bool {
     return rowsAffected > 0
 }
 
-// Insert the provided message (and response(s)) in the database
+// Insert the provided message in the database
 func (self *database) insertMessage(messagesModel messagesModel) bool {
-    /*
-    query := "INSERT INTO Responses (template) VALUES "+
-        "('"+ messagesModel.ResponseTemplate +"')"
-    response := self.runQuery(query)
-    responseId, _ := response.LastInsertId()
-    */
     apiIdString := strconv.Itoa(messagesModel.ApiId)
     insertResult := self.runQuery("INSERT INTO Messages (apiId, identifier) "+
         "VALUES ("+
@@ -122,6 +116,38 @@ func (self *database) insertMessage(messagesModel messagesModel) bool {
         ")")
     rowsAffected, _ := insertResult.RowsAffected()
     return rowsAffected > 0
+}
+
+// Insert the provided response in the database with an appropriate mapping
+func (self *database) insertResponse(model responsesModel) bool {
+    query := "INSERT INTO Responses (template) VALUES "+
+        "('"+ model.Template +"')"
+    response := self.runQuery(query)
+    responseId, _ := response.LastInsertId()
+    responseIdString := strconv.Itoa(int(responseId))
+    rowsAffected, _ := response.RowsAffected()
+    if(rowsAffected < 1) {
+        return false
+    }
+
+    var isDefault string;
+    if(model.Default) {
+        isDefault = "1";
+    } else {
+        isDefault = "0";
+    }
+    var messageId string = strconv.Itoa(model.MessageId)
+
+    insertResult := self.runQuery("INSERT INTO MessagesResponsesMap "+
+        "(messagesId, responsesId, `default`, condition) "+
+        "VALUES ("+
+            "'"+ messageId +"', "+
+            "'"+ responseIdString +"', "+
+            "'"+ isDefault +"', "+
+            "'"+ model.Condition +"'"+
+        ")")
+        responseSaveRows, _ := insertResult.RowsAffected()
+    return responseSaveRows > 0
 }
 
 func (self *database) insertData() {
@@ -197,7 +223,7 @@ func (self *database) initializeDatabase() {
             "id INTEGER PRIMARY KEY,"+
             "template TEXT"+
         ")")
-    self.runQuery("CREATE TABLE IF NOT EXISTS  MessagesResponsesMap ("+
+    self.runQuery("CREATE TABLE IF NOT EXISTS MessagesResponsesMap ("+
         "messagesId INTEGER NOT NULL,"+
         "responsesId INTEGER NOT NULL,"+
         "`default` INTEGER DEFAULT 1 NOT NULL,"+
