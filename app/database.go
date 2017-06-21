@@ -65,8 +65,11 @@ func (self *database) getResponsesForMessage(messageId int) *sql.Rows {
 }
 
 func (self *database) getResponseMessage(responseId int) *sql.Rows {
-    rows, error := self.connection.Query("SELECT * FROM Responses WHERE "+
-        "id = '"+ strconv.Itoa(responseId) +"';")
+    query := "SELECT id, template, `Default`, condition "+
+        "FROM Responses INNER JOIN "+
+        " MessagesResponsesMap ON id = responsesId WHERE "+
+        "id = '"+ strconv.Itoa(responseId) +"';"
+    rows, error := self.connection.Query(query)
     self.handleError(error)
     return rows
 }
@@ -94,6 +97,30 @@ func (self *database) updateMessages(model messagesModel) bool {
     result := self.runQuery(query)
     rowsAffected, _ := result.RowsAffected()
     return rowsAffected > 0
+}
+
+// Update a response that is saved in the database with the provided model
+func (self *database) updateResponse(model responsesModel) bool {
+    idString := strconv.Itoa(model.Id)
+    query := "UPDATE Responses SET template = '"+ model.Template +"' "+
+        "WHERE id = "+ idString +";"
+    response := self.runQuery(query)
+    rowsAffected, _ := response.RowsAffected()
+    if(rowsAffected < 1) {
+        return false
+    }
+    var isDefault string;
+    if(model.Default) {
+        isDefault = "1";
+    } else {
+        isDefault = "0";
+    }
+    updateQuery := "UPDATE MessagesResponsesMap SET `default` = "+ isDefault +
+        ", condition = '"+ model.Condition +"' WHERE responsesId ="+
+        idString +";"
+    updateResponse := self.runQuery(updateQuery)
+    updateRowsAffected, _ := updateResponse.RowsAffected()
+    return updateRowsAffected > 0
 }
 
 /// Insert the provided API into the database
