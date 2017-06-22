@@ -19,7 +19,9 @@ func (self *database) connect() {
     connection, error := sql.Open("sqlite3", "./settings.db")
     self.handleError(error)
     self.connection = connection
+    // @TODO Remove this
     //self.initializeDatabase()
+    //self.insertData()
 }
 
 func (self *database) getApis() *sql.Rows {
@@ -208,7 +210,7 @@ func (self *database) insertData() {
             "'<DPC8>'"+
         "), ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
-            "'<HOS_RSP_SCR>F</HOS_RSP_SCR>'"+
+            "'<SES_IND>E</SES_IND>'"+
         "), ("+
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
             "'<HOS_CMD>*'"+
@@ -225,6 +227,7 @@ func (self *database) insertData() {
             "(SELECT id FROM Apis WHERE name = 'worldspan'), "+
             "'<UPC7>'"+
         ")")
+    self.runQuery("DELETE FROM MessagesResponsesMap;")
     self.runQuery("INSERT INTO MessagesResponsesMap (messagesId, responsesId) "+
         "VALUES "+
             "(1, 1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8);")
