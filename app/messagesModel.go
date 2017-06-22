@@ -2,7 +2,7 @@ package main
 
 import (
     "database/sql"
-)
+    "log")
 
 type messagesModel struct {
     Id int
@@ -34,4 +34,13 @@ func (self * messagesModel) loadFromId(id int) {
     for rows.Next() {
         self.loadFromRow(rows)
     }
+}
+
+// Determine which response should be used and return the appropriate response
+func (self * messagesModel) getResponse(body string) responsesModel {
+    if(len(self.Responses) < 1) {
+        log.Fatal("Not able to find response")
+    }
+    // @TODO Determine which response to use if there are multiple
+    return self.Responses[0]
 }

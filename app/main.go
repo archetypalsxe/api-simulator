@@ -21,6 +21,7 @@ func main() {
     router.HandleFunc("/updateSettings", UpdateSettings)
     router.HandleFunc("/example/{id}", ExampleId)
     router.HandleFunc("/worldspan", Worldspan)
+    router.HandleFunc("/api/{apiName}", ApiCall)
 
     // File servers
     path := os.Getenv("GOPATH") + "/src/api-simulator/"
@@ -157,6 +158,17 @@ func ExampleId(response http.ResponseWriter, request *http.Request) {
     providedVars := mux.Vars(request)
     identifier := strings.TrimSpace(providedVars["id"])
     fmt.Fprintln(response, "Provided ID: ", identifier)
+}
+
+func ApiCall(response http.ResponseWriter, request *http.Request) {
+    providedVars := mux.Vars(request)
+    apiName := strings.TrimSpace(providedVars["apiName"])
+    apiHandler := apiHandler{request: *request, response: response}
+    if(!apiHandler.withApiName(apiName)) {
+        fmt.Fprintln(response, "Invalid API name provided: "+ apiName)
+        return
+    }
+    apiHandler.respond()
 }
 
 func Worldspan(response http.ResponseWriter, request *http.Request) {

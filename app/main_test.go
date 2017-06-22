@@ -10,6 +10,28 @@ import (
     "testing"
 )
 
+func TestApiCallValid(test *testing.T) {
+    sendRequestPost(test,
+        "http://localhost:8080/api/worldspan",
+        strings.NewReader("<PSC5>"),
+        "<ns1:ProviderTransactionResponse xmlns:ns1=\"xxs\"><RSP><PSW5")
+}
+
+func TestApiCallInvalidApi(test *testing.T) {
+    sendRequestPost(test,
+        "http://localhost:8080/api/badapiname",
+        strings.NewReader("<PSC5>"),
+        "Invalid API name provided: badapiname")
+}
+
+func TestApiCallBadMessage(test *testing.T) {
+    sendRequestPost(test,
+        "http://localhost:8080/api/worldspan",
+        strings.NewReader("badmessagename"),
+        "Message not found")
+}
+
+
 func TestRootDirectory(test *testing.T) {
     sendRequestForm(test,
         "http://localhost:8080",

@@ -28,6 +28,7 @@ func (self * apiModel) loadMessages() {
     }
 }
 
+// Load up this object from a provided row
 func (self * apiModel) loadFromRow(row *sql.Rows) {
     row.Scan(&self.Id, &self.Name, &self.BeginningEscape, &self.EndingEscape)
 }
