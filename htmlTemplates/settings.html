@@ -51,8 +51,22 @@
                             {{range .Messages}}
                                 <li>
                                     Identifier:
-                                    <div id="identifierField{{.Id}}" data-type="div" class="cursor">
+                                    <span id="identifierField{{.Id}}" data-type="span" class="cursor">
                                         {{.Identifier}}
+                                    </span>
+                                    <div class="responsePreContainer cursor">
+                                        <pre
+                                            data-type="pre"
+                                            data-modal="messageTemplate-{{.Id}}"
+                                            id="messageTemplateField{{.Id}}"
+                                            class="responsePreBox"
+                                        >Testing</pre>
+                                    </div>
+                                    <div id="messageTemplate-{{.Id}}" class="modalDialog">
+                                        <div>
+                                            <a href="#close" title="Close" class="close">X</a>
+                                            Testing this
+                                        </div>
                                     </div>
                                     <ul>
                                         <a href="#addNewResponse-{{.Id}}">Add New Response</a>
@@ -83,9 +97,18 @@
                                         </div>
                                         {{range .Responses}}
                                             <div class="responsePreContainer">
-                                                <pre data-type="pre" id="responseField{{.Id}}" class="responsePreBox cursor">
-                                                    {{.Template}}
-                                                </pre>
+                                                <pre
+                                                    data-type="pre"
+                                                    data-modal="responseTemplate-{{.Id}}"
+                                                    id="responseField{{.Id}}"
+                                                    class="responsePreBox cursor"
+                                                >{{.Template}}</pre>
+                                            </div>
+                                            <div id="responseTemplate-{{.Id}}" class="modalDialog expandedModal">
+                                                <div>
+                                                    <a href="#close" title="Close" class="close">X</a>
+                                                    <textarea class="responsePreBox">{{.Template}}</textarea>
+                                                </div>
                                             </div>
                                         {{end}}
                                     </ul>

@@ -95,6 +95,12 @@ function clickEvent(event) {
     var target = $(event.target);
     var targetId = target.attr('id');
 
+    if(target.data('modal')) {
+        window.location = "#"+target.data('modal');
+        window.location.reload();
+        return;
+    }
+
     if(target.data('type') == "pre") {
         var type = "textarea";
     } else {
