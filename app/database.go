@@ -234,10 +234,13 @@ func (self *database) insertData() {
 }
 
 func (self *database) initializeDatabase() {
-    self.runQuery("DROP TABLE IF EXISTS Apis;");
-    self.runQuery("DROP TABLE IF EXISTS Messages;");
-    self.runQuery("DROP TABLE IF EXISTS Responses;");
-    self.runQuery("DROP TABLE IF EXISTS MessagesResponsesMap;");
+    self.runQuery("DROP TABLE IF EXISTS Apis;")
+    self.runQuery("DROP TABLE IF EXISTS Messages;")
+    self.runQuery("DROP TABLE IF EXISTS Responses;")
+    self.runQuery("DROP TABLE IF EXISTS MessagesResponsesMap;")
+    self.runQuery("DROP TABLE IF EXISTS MessageFields;")
+    self.runQuery("DROP TABLE IF EXISTS SavedFields;")
+    self.runQuery("DROP TABLE IF EXISTS ResponseFields;")
     self.runQuery("CREATE TABLE IF NOT EXISTS Apis ("+
         "id INTEGER PRIMARY KEY,"+
         "name text,"+
@@ -259,6 +262,21 @@ func (self *database) initializeDatabase() {
         "`default` INTEGER DEFAULT 1 NOT NULL,"+
         "condition TEXT,"+
         "PRIMARY KEY(messagesId, responsesId)"+
+        ")")
+    self.runQuery("CREATE TABLE IF NOT EXISTS MessageFields ("+
+        "id INTEGER PRIMARY KEY,"+
+        "fieldName TEXT NOT NULL"+
+        ")")
+    self.runQuery("CREATE TABLE IF NOT EXISTS SavedFields ("+
+        "messageFieldId INTEGER,"+
+        "key TEXT NOT NULL,"+
+        "value TEXT NOT NULL,"+
+        "PRIMARY KEY(messageFieldId, key)"+
+        ")")
+    self.runQuery("CREATE TABLE IF NOT EXISTS ResponseFields ("+
+        "id INTEGER PRAIMRY KEY,"+
+        "messageFieldsIds TEXT NOT NULL,"+
+        "formula TEXT NOT NULL"+
         ")")
 }
 
