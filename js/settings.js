@@ -5,18 +5,24 @@ $(document).ready(function() {
 });
 
 function updateElement(target) {
-    var targetId = target.attr('id');
+    sendUpdateElementRequest(target.attr('id'), target.val(), false);
+}
+
+function sendUpdateElementRequest(id, value, closeModalNeeded) {
     // @TODO Consolidate code
     $.ajax({
         url: "/updateSettings",
         type: "post",
         data: {
             action: "updateField",
-            id: targetId,
-            value: target.val()
+            id: id,
+            value: value
         }
     }).done(function(response) {
         console.log(response);
+        if(closeModalNeeded) {
+            closeModal();
+        }
     });
 }
 
@@ -37,8 +43,7 @@ function saveApi() {
     }).done(function(response) {
         var json = $.parseJSON(response);
         if(json.Status) {
-            window.location = "#close";
-            window.location.reload();
+            closeModal();
         } else {
             alert("There was an error saving!");
         }
@@ -58,8 +63,7 @@ function saveMessage(apiId) {
     }).done(function(response) {
         var json = $.parseJSON(response);
         if(json.Status) {
-            window.location = "#close";
-            window.location.reload();
+            closeModal();
         } else {
             alert("There was an error saving!");
         }
@@ -83,8 +87,7 @@ function saveResponse(messageId) {
     }).done(function(response) {
         var json = $.parseJSON(response);
         if(json.Status) {
-            window.location = "#close";
-            window.location.reload();
+            closeModal();
         } else {
             alert("There was an error saving!");
         }
@@ -144,4 +147,21 @@ function blurEvent(event) {
             clickEvent(event);
         });
     }
+}
+
+// Save a provided field type from a modal
+function saveModal(field, id) {
+    var textArea = $('#'+field+id+"TextArea");
+    var oldValue = $('#'+field+id+"OldValue");
+    if(textArea.val() == oldValue.val()) {
+        closeModal();
+    } else {
+        console.log("Changes made");
+        sendUpdateElementRequest(field+"Field"+id, textArea.val(), true);
+    }
+}
+
+function closeModal() {
+    window.location = "#close";
+    window.location.reload();
 }

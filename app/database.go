@@ -19,9 +19,6 @@ func (self *database) connect() {
     connection, error := sql.Open("sqlite3", "./settings.db")
     self.handleError(error)
     self.connection = connection
-    // @TODO Remove this
-    //self.initializeDatabase()
-    //self.insertData()
 }
 
 func (self *database) getApis() *sql.Rows {
@@ -250,7 +247,8 @@ func (self *database) initializeDatabase() {
     self.runQuery("CREATE TABLE IF NOT EXISTS Messages ("+
             "id INTEGER PRIMARY KEY,"+
             "apiId INTEGER,"+
-            "identifier TEXT"+
+            "identifier TEXT,"+
+            "template TEXT"+
         ")")
     self.runQuery("CREATE TABLE IF NOT EXISTS Responses ("+
             "id INTEGER PRIMARY KEY,"+

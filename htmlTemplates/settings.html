@@ -60,12 +60,13 @@
                                             data-modal="messageTemplate-{{.Id}}"
                                             id="messageTemplateField{{.Id}}"
                                             class="responsePreBox"
-                                        >Testing</pre>
+                                            >{{.Template}}</pre>
                                     </div>
                                     <div id="messageTemplate-{{.Id}}" class="modalDialog">
                                         <div>
                                             <a href="#close" title="Close" class="close">X</a>
-                                            Testing this
+                                            Modifying Message Template for {{.Identifier}}
+                                            <textarea class="messageTextArea">{{.Template}}</textarea>
                                         </div>
                                     </div>
                                     <ul>
@@ -74,7 +75,7 @@
                                             <div>
                                                 <a href="#close" title="Close" class="close">X</a>
                                                 <h2>Adding New Response: {{.Identifier}}</h2>
-                                                <div><label>Template: <textarea id="response-{{.Id}}"></textarea></label></div>
+                                                <div><label>Template: <textarea id="response-{{.Id}}" class="messageTextArea"></textarea></label></div>
                                                 <div>
                                                     Default?
                                                     <select id="default-{{.Id}}">
@@ -95,7 +96,7 @@
                                                 <input type="button" value="Save" onclick="saveResponse({{.Id}})"/>
                                             </div>
                                         </div>
-                                        {{range .Responses}}
+                                        {{$parentIdentifier := .Identifier}}{{range .Responses}}
                                             <div class="responsePreContainer">
                                                 <pre
                                                     data-type="pre"
@@ -104,10 +105,14 @@
                                                     class="responsePreBox cursor"
                                                 >{{.Template}}</pre>
                                             </div>
-                                            <div id="responseTemplate-{{.Id}}" class="modalDialog expandedModal">
+                                            <div id="responseTemplate-{{.Id}}" class="modalDialog">
                                                 <div>
                                                     <a href="#close" title="Close" class="close">X</a>
-                                                    <textarea class="responsePreBox">{{.Template}}</textarea>
+                                                    Modifying Response Template for Message {{html $parentIdentifier}}
+                                                    <textarea id="response{{.Id}}TextArea" class="messageTextArea">{{.Template}}</textarea>
+                                                    <input type="hidden" id="response{{.Id}}OldValue" value="{{.Template}}"/>
+                                                    <input type="button" value="Save" onclick="saveModal('response', {{.Id}})"/>
+                                                    <input type="button" value="Close Without Saving" onclick="closeModal()"/>
                                                 </div>
                                             </div>
                                         {{end}}

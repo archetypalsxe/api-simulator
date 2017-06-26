@@ -8,11 +8,12 @@ type messagesModel struct {
     Id int
     ApiId int
     Identifier string
+    Template string
     Responses []responsesModel
 }
 
 func (self * messagesModel) loadFromRow(row *sql.Rows) {
-    row.Scan(&self.Id, &self.ApiId, &self.Identifier)
+    row.Scan(&self.Id, &self.ApiId, &self.Identifier, &self.Template)
 }
 
 // Load up all the responses that are associated to this message

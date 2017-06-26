@@ -35,6 +35,9 @@ func (self *settingsPage) getApiModels() []apiModel {
 
     database := database{}
     database.connect()
+    // @TODO Remove this
+    //database.initializeDatabase()
+    //database.insertData()
     rows := database.getApis()
 
 
