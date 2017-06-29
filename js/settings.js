@@ -156,7 +156,6 @@ function saveModal(field, id) {
     if(textArea.val() == oldValue.val()) {
         closeModal();
     } else {
-        console.log("Changes made");
         sendUpdateElementRequest(field+"Field"+id, textArea.val(), true);
     }
 }

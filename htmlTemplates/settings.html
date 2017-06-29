@@ -64,9 +64,11 @@
                                     </div>
                                     <div id="messageTemplate-{{.Id}}" class="modalDialog">
                                         <div>
-                                            <a href="#close" title="Close" class="close">X</a>
                                             Modifying Message Template for {{.Identifier}}
-                                            <textarea class="messageTextArea">{{.Template}}</textarea>
+                                            <textarea id="message{{.Id}}TextArea" class="messageTextArea">{{.Template}}</textarea>
+                                            <input type="hidden" id="message{{.Id}}OldValue" value="{{.Template}}"/>
+                                            <input type="button" value="Save" onclick="saveModal('message', {{.Id}})"/>
+                                            <input type="button" value="Close Without Saving" onclick="closeModal()"/>
                                         </div>
                                     </div>
                                     <ul>
@@ -107,7 +109,6 @@
                                             </div>
                                             <div id="responseTemplate-{{.Id}}" class="modalDialog">
                                                 <div>
-                                                    <a href="#close" title="Close" class="close">X</a>
                                                     Modifying Response Template for Message {{html $parentIdentifier}}
                                                     <textarea id="response{{.Id}}TextArea" class="messageTextArea">{{.Template}}</textarea>
                                                     <input type="hidden" id="response{{.Id}}OldValue" value="{{.Template}}"/>

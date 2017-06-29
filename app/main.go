@@ -88,11 +88,16 @@ func updateFieldFromForm(request *http.Request, response http.ResponseWriter) {
             model.loadFromId(id)
             model.Template = value
             model.save()
-        case "identifierField":
+        case "identifierField", "messageField":
             model := messagesModel{}
             id, _ := strconv.Atoi(databaseId)
             model.loadFromId(id)
-            model.Identifier = value
+            switch fieldName {
+                case "identifierField":
+                    model.Identifier = value
+                case "messageField":
+                    model.Template = value
+            }
             database := database{}
             database.connect()
             database.updateMessages(model)
