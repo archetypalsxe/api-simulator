@@ -63,6 +63,13 @@ func (self *database) getResponsesForMessage(messageId int) *sql.Rows {
     return rows
 }
 
+func (self *database) getFieldsForMessage(messageId int) *sql.Rows {
+    rows, error := self.connection.Query("SELECT id, fieldName FROM "+
+        "MessagesFields WHERE messageId = '"+ strconv.Itoa(messageId) +"';")
+    self.handleError(error)
+    return rows
+}
+
 func (self *database) getResponseMessage(responseId int) *sql.Rows {
     query := "SELECT id, template, `Default`, condition "+
         "FROM Responses INNER JOIN "+
@@ -177,6 +184,16 @@ func (self *database) insertResponse(model responsesModel) bool {
     return responseSaveRows > 0
 }
 
+// Insert a new message field
+func (self *database) insertMessageField(model messageFieldsModel) bool {
+    messageIdString := strconv.Itoa(model.MessageId)
+    query := "INSERT INTO MessageFields (messageId, fieldName) VALUES "+
+        "('"+ messageIdString +"', '"+ model.FieldName +"');"
+    response := self.runQuery(query)
+    rowsAffected, _ := response.RowsAffected()
+    return rowsAffected > 0
+}
+
 func (self *database) insertData() {
     // Insert the APIs
     self.runQuery("DELETE FROM Apis;")
@@ -264,6 +281,7 @@ func (self *database) initializeDatabase() {
         ")")
     self.runQuery("CREATE TABLE IF NOT EXISTS MessageFields ("+
         "id INTEGER PRIMARY KEY,"+
+        "messageId INTEGER NOT NULL,"+
         "fieldName TEXT NOT NULL"+
         ")")
     self.runQuery("CREATE TABLE IF NOT EXISTS SavedFields ("+

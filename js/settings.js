@@ -186,4 +186,17 @@ function closeModalModal() {
 }
 
 function saveNewField() {
+    $.ajax({
+        url: "/updateSettings",
+        type: "post",
+        data: {
+            action: "saveNewField",
+            type:  $('#fieldType').val(),
+            id: $('#fieldId').val(),
+            value: $('#newFieldInput').val()
+        }
+    }).done(function(response) {
+        console.log(response);
+        closeModalModal();
+    });
 }

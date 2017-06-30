@@ -2,18 +2,32 @@ package main
 
 import (
     "database/sql"
-    "log")
+    "log"
+)
 
 type messagesModel struct {
     Id int
     ApiId int
     Identifier string
     Template string
+    Fields []messageFieldsModel
     Responses []responsesModel
 }
 
 func (self * messagesModel) loadFromRow(row *sql.Rows) {
     row.Scan(&self.Id, &self.ApiId, &self.Identifier, &self.Template)
+}
+
+// Load up all the message fields that are related to this message
+func (self * messagesModel) loadFields() {
+    database := database{}
+    database.connect()
+    rows := database.getFieldsForMessage(self.Id)
+    for rows.Next() {
+        model := messageFieldsModel{}
+        model.loadFromRow(rows)
+        self.Fields = append(self.Fields, model)
+    }
 }
 
 // Load up all the responses that are associated to this message

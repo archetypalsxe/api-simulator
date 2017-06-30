@@ -53,6 +53,8 @@ func UpdateSettings(response http.ResponseWriter, request *http.Request) {
             saveMessageFromForm(request, response)
         case "saveResponse":
             saveResponseFromForm(request, response)
+        case "saveNewField":
+            saveNewFieldFromForm(request, response)
         case "updateField":
             updateFieldFromForm(request, response)
         default:
@@ -157,6 +159,22 @@ func saveResponseFromForm(request *http.Request, response http.ResponseWriter) {
     result := database.insertResponse(model)
     ajaxResponse := ajaxResponse{Status: result, Error: "None"}
     json.NewEncoder(response).Encode(ajaxResponse)
+}
+
+// Save a new message field that was received from the settings page
+func saveNewFieldFromForm(request *http.Request, response http.ResponseWriter) {
+    messageId, _ := strconv.Atoi(request.FormValue("id"))
+    // Currently we are assuming that it's a message
+    //fieldType := request.FormValue("type")
+    fieldValue := request.FormValue("value")
+    model := messageFieldsModel {MessageId: messageId,
+        FieldName: fieldValue}
+    database := database{}
+    database.connect()
+    result := database.insertMessageField(model)
+    ajaxResponse := ajaxResponse{Status: result, Error: "None"}
+    json.NewEncoder(response).Encode(ajaxResponse)
+
 }
 
 func ExampleId(response http.ResponseWriter, request *http.Request) {
