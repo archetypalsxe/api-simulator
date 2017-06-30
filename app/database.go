@@ -92,7 +92,8 @@ func (self *database) updateApi(apiModel apiModel) bool {
 // Updating a provided message in the database
 func (self *database) updateMessages(model messagesModel) bool {
     query := "UPDATE Messages SET identifier = '"+ model.Identifier +
-        "', template = '" + model.Template +"';"
+        "', template = '" + model.Template +"' WHERE id = '"+
+        strconv.Itoa(model.Id) +"';"
     result := self.runQuery(query)
     rowsAffected, _ := result.RowsAffected()
     return rowsAffected > 0

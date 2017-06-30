@@ -5,6 +5,16 @@
 </head>
 
 <body>
+    <div class="modalModal">
+        <div>
+            <div id="modalContent">
+                This is a modal modal
+            </div>
+            <div id="modalControls">
+                <input type="button" value="Close" onclick="closeModalModal()">
+            </div>
+        </div>
+    </div>
     <a href="#addNewApiDiv">Add New API</a>
     <div id="addNewApiDiv" class="modalDialog">
         <div>
@@ -64,7 +74,8 @@
                                     </div>
                                     <div id="messageTemplate-{{.Id}}" class="modalDialog">
                                         <div>
-                                            Modifying Message Template for {{.Identifier}}
+                                            <div>Modifying Message Template for {{.Identifier}}</div>
+                                            <input type="button" value="Insert Field" onclick="insertFieldDialog('message', {{.Id}})"/>
                                             <textarea id="message{{.Id}}TextArea" class="messageTextArea">{{.Template}}</textarea>
                                             <input type="hidden" id="message{{.Id}}OldValue" value="{{.Template}}"/>
                                             <input type="button" value="Save" onclick="saveModal('message', {{.Id}})"/>

@@ -2,14 +2,14 @@ label textarea {
     vertical-align: middle;
 }
 
-.modalDialog {
+.modalDialog, .modalModal {
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     background: rgba(0,0,0,0.8);
-    z-index: 99999;
+    z-index: 9;
     opacity:0;
     -webkit-transition: opacity 400ms ease-in;
     -moz-transition: opacity 400ms ease-in;
@@ -22,7 +22,7 @@ label textarea {
     pointer-events: auto;
 }
 
-.modalDialog > div {
+.modalDialog > div, .modalModal > div {
     max-width: 90%;
     position: relative;
     margin: 10% auto;
@@ -32,6 +32,16 @@ label textarea {
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999);
+}
+
+.modalModal {
+    z-index: 99;
+}
+
+.modalModal > div {
+    margin: 15% auto;
+    height: 40%;
+    width: 60%;
 }
 
 .close {

@@ -164,3 +164,14 @@ function closeModal() {
     window.location = "#close";
     window.location.reload();
 }
+
+function insertFieldDialog(type, identifier) {
+    $('.modalModal').css('pointer-events', 'auto');
+    $('.modalModal').css('opacity', 1);
+    console.log(type, identifier);
+}
+
+function closeModalModal() {
+    $('.modalModal').css('opacity', 0);
+    $('.modalModal').css('pointer-events', 'none');
+}
