@@ -168,10 +168,22 @@ function closeModal() {
 function insertFieldDialog(type, identifier) {
     $('.modalModal').css('pointer-events', 'auto');
     $('.modalModal').css('opacity', 1);
-    console.log(type, identifier);
+    $('#fieldType').val(type);
+    $('#fieldId').val(identifier);
+    $(document).keyup(function(e) {
+        if(e.keyCode == 27) {
+            closeModalModal();
+        }
+    });
 }
 
 function closeModalModal() {
     $('.modalModal').css('opacity', 0);
     $('.modalModal').css('pointer-events', 'none');
+    // Disable escape key
+    $(document).keyup(function(e) {
+    });
+}
+
+function saveNewField() {
 }

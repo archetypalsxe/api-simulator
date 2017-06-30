@@ -7,11 +7,15 @@
 <body>
     <div class="modalModal">
         <div>
+            <a href="javascript:closeModalModal()" title="Close" class="close">X</a>
             <div id="modalContent">
-                This is a modal modal
-            </div>
-            <div id="modalControls">
-                <input type="button" value="Close" onclick="closeModalModal()">
+                <input type="hidden" id="fieldType">
+                <input type="hidden" id="fieldId">
+                <div class="insertFieldModal">
+                    <h3>Insert New Field</h5>
+                    Field Name: <input id="newFieldName" type="text"/>
+                    <input type="button" value="Save" onclick="saveNewField()">
+                </div>
             </div>
         </div>
     </div>
