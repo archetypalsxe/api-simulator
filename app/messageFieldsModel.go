@@ -12,5 +12,5 @@ type messageFieldsModel struct {
 
 // Load up this object with a provided row from the database
 func (self * messageFieldsModel) loadFromRow(row *sql.Rows) {
-    row.Scan(&self.Id, &self.FieldName)
+    row.Scan(&self.Id, &self.MessageId, &self.FieldName)
 }

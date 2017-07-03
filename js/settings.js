@@ -183,15 +183,15 @@ function closeModalModal() {
     });
 }
 
-function saveNewField() {
+function saveNewField(id) {
     $.ajax({
         url: "/updateSettings",
         type: "post",
         data: {
             action: "saveNewField",
-            type:  $('#fieldType').val(),
-            id: $('#fieldId').val(),
-            value: $('#newFieldInput').val()
+            type:  $('#fieldType-'+id).val(),
+            id: $('#fieldId-'+id).val(),
+            value: $('#newFieldInput-'+id).val()
         }
     }).done(function(response) {
         console.log(response);

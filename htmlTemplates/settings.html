@@ -53,12 +53,19 @@
                                     <div>
                                         <a href="javascript:closeModalModal()" title="Close" class="close">X</a>
                                         <div id="modalContent">
-                                            <input type="hidden" id="fieldType" value="message">
-                                            <input type="hidden" id="fieldId" value="{{.Id}}">
+                                            {{range .Fields}}
+                                            <div>
+                                                <div>{{.Id}}</div>
+                                                <div>{{.MessageId}}</div>
+                                                <div>{{.FieldName}}</div>
+                                            </div>
+                                            {{end}}
+                                            <input type="hidden" id="fieldType-{{.Id}}" value="message">
+                                            <input type="hidden" id="fieldId-{{.Id}}" value="{{.Id}}">
                                             <div class="insertFieldModal">
                                                 <h3>Insert New Field</h5>
-                                                Field Name: <input id="newFieldInput" type="text"/>
-                                                <input type="button" value="Save" onclick="saveNewField()">
+                                                Field Name: <input id="newFieldInput-{{.Id}}" type="text"/>
+                                                <input type="button" value="Save" onclick="saveNewField({{.Id}})">
                                             </div>
                                         </div>
                                     </div>
