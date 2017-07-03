@@ -185,13 +185,15 @@ func (self *database) insertResponse(model responsesModel) bool {
 }
 
 // Insert a new message field
-func (self *database) insertMessageField(model messageFieldsModel) bool {
+func (self *database) insertMessageField(model messageFieldsModel) (success bool, insertId int64) {
     messageIdString := strconv.Itoa(model.MessageId)
     query := "INSERT INTO MessageFields (messageId, fieldName) VALUES "+
         "('"+ messageIdString +"', '"+ model.FieldName +"');"
     response := self.runQuery(query)
     rowsAffected, _ := response.RowsAffected()
-    return rowsAffected > 0
+    success = rowsAffected > 0
+    insertId, _ = response.LastInsertId()
+    return
 }
 
 func (self *database) insertData() {

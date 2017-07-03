@@ -171,8 +171,8 @@ func saveNewFieldFromForm(request *http.Request, response http.ResponseWriter) {
         FieldName: fieldValue}
     database := database{}
     database.connect()
-    result := database.insertMessageField(model)
-    ajaxResponse := ajaxResponse{Status: result, Error: "None"}
+    result, id := database.insertMessageField(model)
+    ajaxResponse := ajaxResponse{Status: result, Error: "None", Id: id}
     json.NewEncoder(response).Encode(ajaxResponse)
 
 }

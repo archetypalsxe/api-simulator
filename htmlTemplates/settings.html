@@ -20,6 +20,8 @@
     <h2>APIs</h2>
     <ul>
         {{range .ApiModels}}
+        {{$apiBeginningEscape := .BeginningEscape}}
+        {{$apiEndingEscape := .EndingEscape}}
             <li>
                 <div id="apiNameField" data-type="div" class="apiDisplay cursor" data-id="{{.Id}}">
                     {{.Name}}
@@ -60,7 +62,10 @@
                                             {{$messageId := .Id}}{{range .Fields}}
                                                 <div>
                                                     {{.FieldName}}
-                                                    <input type="button" value="Insert" onclick="insertValueIntoTextArea('{{html $messageId}}', '<$--TESTING--$>')">
+                                                    <input type="button" value="Insert" onclick="insertValueIntoTextArea(
+                                                        '{{html $messageId}}',
+                                                        '{{html $apiBeginningEscape}}{{.Id}}{{html $apiEndingEscape}}'
+                                                        )">
                                                 </div>
                                             {{end}}
                                             {{if .Fields }}
@@ -71,7 +76,9 @@
                                             <div class="insertFieldModal">
                                                 <h3>Insert New Field</h5>
                                                 Field Name: <input id="newFieldInput-{{.Id}}" type="text"/>
-                                                <input type="button" value="Save & Insert" onclick="saveNewField({{.Id}})"/>
+                                                <input type="button" value="Save & Insert" onclick="saveNewField(
+                                                   '{{.Id}}', '{{html $apiBeginningEscape}}', '{{html $apiEndingEscape}}'
+                                                )"/>
                                             </div>
                                         </div>
                                     </div>

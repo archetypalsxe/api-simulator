@@ -195,7 +195,7 @@ function closeModalModal() {
     });
 }
 
-function saveNewField(id) {
+function saveNewField(id, beginningEscape, endingEscape) {
     $.ajax({
         url: "/updateSettings",
         type: "post",
@@ -206,7 +206,10 @@ function saveNewField(id) {
             value: $('#newFieldInput-'+id).val()
         }
     }).done(function(response) {
-        console.log(response);
-        insertValueIntoTextArea(id, "<$--TESTING--$>");
+        responseObject = JSON.parse(response);
+        insertValueIntoTextArea(
+            id,
+            beginningEscape + responseObject.Id + endingEscape
+        );
     });
 }
