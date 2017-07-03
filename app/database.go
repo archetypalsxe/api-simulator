@@ -65,7 +65,7 @@ func (self *database) getResponsesForMessage(messageId int) *sql.Rows {
 
 func (self *database) getFieldsForMessage(messageId int) *sql.Rows {
     rows, error := self.connection.Query("SELECT id, fieldName FROM "+
-        "MessagesFields WHERE messageId = '"+ strconv.Itoa(messageId) +"';")
+        "MessageFields WHERE messageId = '"+ strconv.Itoa(messageId) +"';")
     self.handleError(error)
     return rows
 }

@@ -5,20 +5,6 @@
 </head>
 
 <body>
-    <div class="modalModal">
-        <div>
-            <a href="javascript:closeModalModal()" title="Close" class="close">X</a>
-            <div id="modalContent">
-                <input type="hidden" id="fieldType">
-                <input type="hidden" id="fieldId">
-                <div class="insertFieldModal">
-                    <h3>Insert New Field</h5>
-                    Field Name: <input id="newFieldInput" type="text"/>
-                    <input type="button" value="Save" onclick="saveNewField()">
-                </div>
-            </div>
-        </div>
-    </div>
     <a href="#addNewApiDiv">Add New API</a>
     <div id="addNewApiDiv" class="modalDialog">
         <div>
@@ -63,6 +49,20 @@
                         </div>
                         <ul>
                             {{range .Messages}}
+                                <div id="newFieldModal-{{.Id}}" class="modalModal">
+                                    <div>
+                                        <a href="javascript:closeModalModal()" title="Close" class="close">X</a>
+                                        <div id="modalContent">
+                                            <input type="hidden" id="fieldType" value="message">
+                                            <input type="hidden" id="fieldId" value="{{.Id}}">
+                                            <div class="insertFieldModal">
+                                                <h3>Insert New Field</h5>
+                                                Field Name: <input id="newFieldInput" type="text"/>
+                                                <input type="button" value="Save" onclick="saveNewField()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <li>
                                     Identifier:
                                     <span id="identifierField{{.Id}}" data-type="span" class="cursor">
@@ -79,7 +79,7 @@
                                     <div id="messageTemplate-{{.Id}}" class="modalDialog">
                                         <div>
                                             <div>Modifying Message Template for {{.Identifier}}</div>
-                                            <input type="button" value="Insert Field" onclick="insertFieldDialog('message', {{.Id}})"/>
+                                            <input type="button" value="Insert Field" onclick="displayFieldDialog({{.Id}})"/>
                                             <textarea id="message{{.Id}}TextArea" class="messageTextArea">{{.Template}}</textarea>
                                             <input type="hidden" id="message{{.Id}}OldValue" value="{{.Template}}"/>
                                             <input type="button" value="Save" onclick="saveModal('message', {{.Id}})"/>

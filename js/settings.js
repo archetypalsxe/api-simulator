@@ -165,11 +165,9 @@ function closeModal() {
     window.location.reload();
 }
 
-function insertFieldDialog(type, identifier) {
-    $('.modalModal').css('pointer-events', 'auto');
-    $('.modalModal').css('opacity', 1);
-    $('#fieldType').val(type);
-    $('#fieldId').val(identifier);
+function displayFieldDialog(identifier) {
+    $('#newFieldModal-'+identifier).css('pointer-events', 'auto');
+    $('#newFieldModal-'+identifier).css('opacity', 1);
     $(document).keyup(function(e) {
         if(e.keyCode == 27) {
             closeModalModal();
