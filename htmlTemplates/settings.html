@@ -53,11 +53,17 @@
                                     <div>
                                         <a href="javascript:closeModalModal()" title="Close" class="close">X</a>
                                         <div id="modalContent">
-                                            {{range .Fields}}
+                                            {{if .Fields }}
                                             <div>
-                                                <div>{{.Id}}</div>
-                                                <div>{{.MessageId}}</div>
-                                                <div>{{.FieldName}}</div>
+                                                <h3>Existing Fields</h3>
+                                            {{end}}
+                                            {{$messageId := .Id}}{{range .Fields}}
+                                                <div>
+                                                    {{.FieldName}}
+                                                    <input type="button" value="Insert" onclick="insertValueIntoTextArea('{{html $messageId}}', '<$--TESTING--$>')">
+                                                </div>
+                                            {{end}}
+                                            {{if .Fields }}
                                             </div>
                                             {{end}}
                                             <input type="hidden" id="fieldType-{{.Id}}" value="message">
@@ -65,7 +71,7 @@
                                             <div class="insertFieldModal">
                                                 <h3>Insert New Field</h5>
                                                 Field Name: <input id="newFieldInput-{{.Id}}" type="text"/>
-                                                <input type="button" value="Save" onclick="saveNewField({{.Id}})">
+                                                <input type="button" value="Save & Insert" onclick="saveNewField({{.Id}})"/>
                                             </div>
                                         </div>
                                     </div>

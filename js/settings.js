@@ -165,6 +165,18 @@ function closeModal() {
     window.location.reload();
 }
 
+function insertValueIntoTextArea(id, value) {
+    var templateBox = document.getElementById('message'+id+'TextArea');
+    var cursor = templateBox.selectionStart;
+    var cursorEnd = templateBox.selectionEnd;
+    var prior = (templateBox.value).substring(0, cursor);
+    var after = (templateBox.value).substring(cursorEnd, templateBox.value.length);
+    templateBox.value = prior + value + after;
+    closeModalModal();
+    templateBox.selectionStart = templateBox.selectionEnd = cursor;
+    templateBox.focus();
+}
+
 function displayFieldDialog(identifier) {
     $('#newFieldModal-'+identifier).css('pointer-events', 'auto');
     $('#newFieldModal-'+identifier).css('opacity', 1);
@@ -195,6 +207,6 @@ function saveNewField(id) {
         }
     }).done(function(response) {
         console.log(response);
-        closeModalModal();
+        insertValueIntoTextArea(id, "<$--TESTING--$>");
     });
 }
