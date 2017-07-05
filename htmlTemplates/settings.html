@@ -50,34 +50,35 @@
                             </div>
                         </div>
                         <ul>
-                            {{range .Messages}}
-                                <div id="newFieldModal-{{.Id}}" class="modalModal">
+                            {{range .Messages}}{{$fields := .Fields}}
+                                <div id="newFieldModalMessage-{{.Id}}" class="modalModal">
                                     <div>
                                         <a href="javascript:closeModalModal()" title="Close" class="close">X</a>
                                         <div id="modalContent">
-                                            {{if .Fields }}
+                                            {{if $fields }}
                                             <div>
                                                 <h3>Existing Fields</h3>
                                             {{end}}
-                                            {{$messageId := .Id}}{{range .Fields}}
+                                            {{$messageId := .Id}}{{range $fields}}
                                                 <div>
                                                     {{.FieldName}}
                                                     <input type="button" value="Insert" onclick="insertValueIntoTextArea(
                                                         '{{html $messageId}}',
+                                                        'message',
                                                         '{{html $apiBeginningEscape}}{{.Id}}{{html $apiEndingEscape}}'
                                                         )">
                                                 </div>
                                             {{end}}
-                                            {{if .Fields }}
+                                            {{if $fields }}
                                             </div>
                                             {{end}}
-                                            <input type="hidden" id="fieldType-{{.Id}}" value="message">
-                                            <input type="hidden" id="fieldId-{{.Id}}" value="{{.Id}}">
+                                            <input type="hidden" id="fieldTypeMessage-{{.Id}}" value="message">
+                                            <input type="hidden" id="fieldIdMessage-{{.Id}}" value="{{.Id}}">
                                             <div class="insertFieldModal">
                                                 <h3>Insert New Field</h5>
-                                                Field Name: <input id="newFieldInput-{{.Id}}" type="text"/>
+                                                Field Name: <input id="newFieldInputMessage-{{.Id}}" type="text"/>
                                                 <input type="button" value="Save & Insert" onclick="saveNewField(
-                                                   '{{.Id}}', '{{html $apiBeginningEscape}}', '{{html $apiEndingEscape}}'
+                                                   '{{.Id}}', 'Message', '{{html $apiBeginningEscape}}', '{{html $apiEndingEscape}}'
                                                 )"/>
                                             </div>
                                         </div>
@@ -99,7 +100,7 @@
                                     <div id="messageTemplate-{{.Id}}" class="modalDialog">
                                         <div>
                                             <div>Modifying Message Template for {{.Identifier}}</div>
-                                            <input type="button" value="Insert Field" onclick="displayFieldDialog({{.Id}})"/>
+                                            <input type="button" value="Insert Field" onclick="displayFieldDialog('Message', {{.Id}})"/>
                                             <textarea id="message{{.Id}}TextArea" class="messageTextArea">{{.Template}}</textarea>
                                             <input type="hidden" id="message{{.Id}}OldValue" value="{{.Template}}"/>
                                             <input type="button" value="Save" onclick="saveModal('message', {{.Id}})"/>
@@ -134,6 +135,39 @@
                                             </div>
                                         </div>
                                         {{$parentIdentifier := .Identifier}}{{range .Responses}}
+                                            <div id="newFieldModalResponse-{{.Id}}" class="modalModal">
+                                                <div>
+                                                    <a href="javascript:closeModalModal()" title="Close" class="close">X</a>
+                                                    <div id="modalContent">
+                                                        {{if $fields }}
+                                                        <div>
+                                                            <h3>Existing Fields</h3>
+                                                        {{end}}
+                                                        {{$responseId := .Id}}{{range $fields}}
+                                                            <div>
+                                                                {{.FieldName}}
+                                                                <input type="button" value="Insert" onclick="insertValueIntoTextArea(
+                                                                    '{{html $responseId}}',
+                                                                    'response',
+                                                                    '{{html $apiBeginningEscape}}{{.Id}}{{html $apiEndingEscape}}'
+                                                                    )">
+                                                            </div>
+                                                        {{end}}
+                                                        {{if $fields }}
+                                                        </div>
+                                                        {{end}}
+                                                        <input type="hidden" id="fieldTypeResponse-{{.Id}}" value="response">
+                                                        <input type="hidden" id="fieldIdResponse-{{.Id}}" value="{{.Id}}">
+                                                        <div class="insertFieldModal">
+                                                            <h3>Insert New Field</h5>
+                                                            Field Name: <input id="newFieldInputResponse-{{.Id}}" type="text"/>
+                                                            <input type="button" value="Save & Insert" onclick="saveNewField(
+                                                               '{{.Id}}', 'Response', '{{html $apiBeginningEscape}}', '{{html $apiEndingEscape}}'
+                                                            )"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="responsePreContainer">
                                                 <pre
                                                     data-type="pre"
@@ -144,7 +178,8 @@
                                             </div>
                                             <div id="responseTemplate-{{.Id}}" class="modalDialog">
                                                 <div>
-                                                    Modifying Response Template for Message {{html $parentIdentifier}}
+                                                    <div>Modifying Response Template for Message {{html $parentIdentifier}}</div>
+                                                    <input type="button" value="Insert Field" onclick="displayFieldDialog('Response', {{.Id}})"/>
                                                     <textarea id="response{{.Id}}TextArea" class="messageTextArea">{{.Template}}</textarea>
                                                     <input type="hidden" id="response{{.Id}}OldValue" value="{{.Template}}"/>
                                                     <input type="button" value="Save" onclick="saveModal('response', {{.Id}})"/>

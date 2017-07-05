@@ -165,8 +165,8 @@ function closeModal() {
     window.location.reload();
 }
 
-function insertValueIntoTextArea(id, value) {
-    var templateBox = document.getElementById('message'+id+'TextArea');
+function insertValueIntoTextArea(id, type, value) {
+    var templateBox = document.getElementById(type+id+'TextArea');
     var cursor = templateBox.selectionStart;
     var cursorEnd = templateBox.selectionEnd;
     var prior = (templateBox.value).substring(0, cursor);
@@ -177,9 +177,9 @@ function insertValueIntoTextArea(id, value) {
     templateBox.focus();
 }
 
-function displayFieldDialog(identifier) {
-    $('#newFieldModal-'+identifier).css('pointer-events', 'auto');
-    $('#newFieldModal-'+identifier).css('opacity', 1);
+function displayFieldDialog(type, identifier) {
+    $('#newFieldModal'+type+'-'+identifier).css('pointer-events', 'auto');
+    $('#newFieldModal'+type+'-'+identifier).css('opacity', 1);
     $(document).keyup(function(e) {
         if(e.keyCode == 27) {
             closeModalModal();
@@ -195,20 +195,21 @@ function closeModalModal() {
     });
 }
 
-function saveNewField(id, beginningEscape, endingEscape) {
+function saveNewField(id, type, beginningEscape, endingEscape) {
     $.ajax({
         url: "/updateSettings",
         type: "post",
         data: {
             action: "saveNewField",
-            type:  $('#fieldType-'+id).val(),
-            id: $('#fieldId-'+id).val(),
-            value: $('#newFieldInput-'+id).val()
+            type:  $('#fieldType'+type+'-'+id).val(),
+            id: $('#fieldId'+type+'-'+id).val(),
+            value: $('#newFieldInput'+type+'-'+id).val()
         }
     }).done(function(response) {
         responseObject = JSON.parse(response);
         insertValueIntoTextArea(
             id,
+            type.toLowerCase(),
             beginningEscape + responseObject.Id + endingEscape
         );
     });
