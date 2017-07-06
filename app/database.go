@@ -90,6 +90,7 @@ func (self *database) updateApi(apiModel apiModel) bool {
     query := "UPDATE Apis SET name = '"+ apiModel.Name +
         "', beginningEscape = '"+ apiModel.BeginningEscape +
         "', endingEscape = '"+ apiModel.EndingEscape +
+        "', wildCard = '"+ apiModel.WildCard +
         "' WHERE id = "+ strconv.Itoa(apiModel.Id) +";"
     result := self.runQuery(query)
     rowsAffected, _ := result.RowsAffected()
@@ -132,9 +133,9 @@ func (self *database) updateResponse(model responsesModel) bool {
 
 /// Insert the provided API into the database
 func (self *database) insertApi(apiModel apiModel) bool {
-    query := "INSERT INTO Apis (name, beginningEscape, endingEscape) "+
+    query := "INSERT INTO Apis (name, beginningEscape, endingEscape, wildCard) "+
         "VALUES ('"+ apiModel.Name +"', '"+ apiModel.BeginningEscape +
-        "', '"+ apiModel.EndingEscape +"');"
+        "', '"+ apiModel.EndingEscape +"', '"+ apiModel.WildCard +"');"
     result := self.runQuery(query)
     rowsAffected, _ := result.RowsAffected()
     return rowsAffected > 0
@@ -199,8 +200,8 @@ func (self *database) insertMessageField(model messageFieldsModel) (success bool
 func (self *database) insertData() {
     // Insert the APIs
     self.runQuery("DELETE FROM Apis;")
-    self.runQuery("INSERT INTO Apis (name, beginningEscape, endingEscape) "+
-        "VALUES ('worldspan', '!--', '--!');")
+    self.runQuery("INSERT INTO Apis (name, beginningEscape, endingEscape, wildCard) "+
+        "VALUES ('worldspan', '!--', '--!', '#*#');")
 
     // Insert the responses
     // @TODO Should be using os.PathSeparator
@@ -260,9 +261,10 @@ func (self *database) initializeDatabase() {
     self.runQuery("DROP TABLE IF EXISTS ResponseFields;")
     self.runQuery("CREATE TABLE IF NOT EXISTS Apis ("+
         "id INTEGER PRIMARY KEY,"+
-        "name text,"+
-        "beginningEscape text,"+
-        "endingEscape text"+
+        "name text NOT NULL,"+
+        "beginningEscape text NOT NULL,"+
+        "endingEscape text NOT NULL,"+
+        "wildCard text NOT NULL DEFAULT '#*#'"+
    ")")
     self.runQuery("CREATE TABLE IF NOT EXISTS Messages ("+
             "id INTEGER PRIMARY KEY,"+

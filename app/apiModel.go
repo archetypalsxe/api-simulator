@@ -9,6 +9,7 @@ type apiModel struct {
     Name string
     BeginningEscape string
     EndingEscape string
+    WildCard string
     Messages []messagesModel
 }
 
@@ -31,7 +32,8 @@ func (self * apiModel) loadMessages() {
 
 // Load up this object from a provided row
 func (self * apiModel) loadFromRow(row *sql.Rows) {
-    row.Scan(&self.Id, &self.Name, &self.BeginningEscape, &self.EndingEscape)
+    row.Scan(&self.Id, &self.Name, &self.BeginningEscape,
+        &self.EndingEscape, &self.WildCard)
 }
 
 // Load up an API model (self) with the provided ID
