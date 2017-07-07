@@ -103,7 +103,7 @@ func updateFieldFromForm(request *http.Request, response http.ResponseWriter) {
             database := database{}
             database.connect()
             database.updateMessages(model)
-        case "apiNameField", "beginningEscapeField", "endingEscapeField":
+        case "apiNameField", "beginningEscapeField", "endingEscapeField", "apiWildCard":
             apiModel := apiModel{}
             apiModel.loadFromId(databaseId)
             switch fieldName {
@@ -113,6 +113,8 @@ func updateFieldFromForm(request *http.Request, response http.ResponseWriter) {
                     apiModel.BeginningEscape = value
                 case "endingEscapeField":
                     apiModel.EndingEscape = value
+                case "apiWildCard":
+                    apiModel.WildCard = value
             }
             database := database{}
             database.connect()
@@ -126,7 +128,8 @@ func updateFieldFromForm(request *http.Request, response http.ResponseWriter) {
 func saveApiFromForm(request *http.Request, response http.ResponseWriter) {
     model := apiModel{Name: request.FormValue("apiName"),
         BeginningEscape: request.FormValue("beginningEscape"),
-        EndingEscape: request.FormValue("endingEscape")}
+        EndingEscape: request.FormValue("endingEscape"),
+        WildCard: request.FormValue("wildCard")}
     database := database{}
     database.connect()
     result := database.insertApi(model)

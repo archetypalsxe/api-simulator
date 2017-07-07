@@ -30,6 +30,7 @@ function saveApi() {
     var apiName = $('#addNewApiDiv #apiName').val();
     var beginningEscape = $('#addNewApiDiv #beginningEscape').val();
     var endingEscape = $('#addNewApiDiv #endingEscape').val();
+    var wildCard = $('#addNewApiDiv #newWildCard').val();
     // @TODO Consolidate code
     $.ajax({
         url: "/updateSettings",
@@ -38,7 +39,8 @@ function saveApi() {
             action: "saveApi",
             apiName: apiName,
             beginningEscape: beginningEscape,
-            endingEscape: endingEscape
+            endingEscape: endingEscape,
+            wildCard: wildCard
         }
     }).done(function(response) {
         var json = $.parseJSON(response);

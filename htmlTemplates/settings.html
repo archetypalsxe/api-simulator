@@ -13,6 +13,7 @@
             <div>API Name: <input id="apiName" type="text"/></div>
             <div>Beginning Escape: <input id="beginningEscape" type="text"/></div>
             <div>Ending Escape: <input id="endingEscape" type="text"/></div>
+            <div>Wild Card: <input id="newWildCard" type="text"/></div>
             <input type="button" value="Save" onclick="saveApi()"/>
         </div>
     </div>
@@ -22,6 +23,7 @@
         {{range .ApiModels}}
         {{$apiBeginningEscape := .BeginningEscape}}
         {{$apiEndingEscape := .EndingEscape}}
+        {{$apiWildCard := .WildCard}}
             <li>
                 <div id="apiNameField" data-type="div" class="apiDisplay cursor" data-id="{{.Id}}">
                     {{.Name}}
@@ -37,6 +39,12 @@
                         Ending Escape:
                         <span id="endingEscapeField{{.Id}}" data-type="span" class="cursor">
                             {{.EndingEscape}}
+                        </span>
+                    </li>
+                    <li>
+                        Wild Card:
+                        <span id="apiWildCard{{.Id}}" data-type="span" class="cursor">
+                            {{.WildCard}}
                         </span>
                     </li>
                     <li>
