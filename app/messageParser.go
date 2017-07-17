@@ -21,3 +21,9 @@ func (self * messageParser) determineMessage(body string) messagesModel {
     model := messagesModel{}
     return model
 }
+
+// Parse the provided message for any necessary dynamic fields
+func (self * messageParser) parseMessage(body string, message messagesModel) []messageFieldsModel {
+    var messageFields []messageFieldsModel
+    return messageFields
+}

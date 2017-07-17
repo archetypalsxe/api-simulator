@@ -8,6 +8,7 @@ type messageFieldsModel struct {
     Id int
     MessageId int
     FieldName string
+    Value string
 }
 
 // Load up this object with a provided row from the database
