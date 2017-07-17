@@ -46,7 +46,7 @@ This was done on a CentOS 6.6 server and is pretty much documentation for myself
 
 ## Compiling
 * To just compile (check for errors):
-  * `go build *.go`
+  * `go build app/*.go`
 
 ## Running Automated Tests
 * `go test app/*.go`
