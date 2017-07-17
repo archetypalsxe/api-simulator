@@ -1,7 +1,6 @@
 package main
 
 import (
-    "log"
     "strings"
 )
 
@@ -16,7 +15,7 @@ func (self * messageParser) determineMessage(body string) messagesModel {
             return messageModel
         }
     }
-    log.Fatal("No messages matched provided message")
+    panic("No messages matched provided request!")
 
     // Pointless, but Golang requires it
     model := messagesModel{}
