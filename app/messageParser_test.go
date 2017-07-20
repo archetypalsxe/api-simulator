@@ -66,9 +66,10 @@ func TestPanicMessage (test *testing.T) {
 func TestParseMessage (test *testing.T) {
     apiModel := setup()
     messageParser := messageParser{ApiModel: apiModel}
-    fields := messageParser.parseMessage("garabageField 123VALUEClosingmore garbage", apiModel.Messages[1])
+    fields := messageParser.parseMessage("garabageField 123<<VALUE>>Closingmore garbage",
+        apiModel, 1)
     if len(fields) < 1 {
-        test.Error("Empty field array returned")
+        test.Error("Empty array returned")
     }
     for _, field := range fields {
         if field.Value != "VALUE" {
@@ -81,9 +82,10 @@ func TestParseMessage (test *testing.T) {
 func TestParseMessageTwo (test *testing.T) {
     apiModel := setup()
     messageParser := messageParser{ApiModel: apiModel}
-    fields := messageParser.parseMessage("garabage12THE VALUE/12some mo'\"fdsfdsatext13second value/13MORE TEXT", apiModel.Messages[2])
+    fields := messageParser.parseMessage("garabage12THE VALUE/12some mo'\"fdsfdsatext13second value/13MORE TEXT",
+        apiModel, 2)
     if len(fields) < 1 {
-        test.Error("Empty field array returned")
+        test.Error("Empty array returned")
     }
     for position, field := range fields {
         if position == 0 && field.Value != "THE VALUE" {
@@ -99,9 +101,10 @@ func TestParseMessageTwo (test *testing.T) {
 func TestParseMessageBeginningEnd (test *testing.T) {
     apiModel := setup()
     messageParser := messageParser{ApiModel: apiModel}
-    fields := messageParser.parseMessage("the valueend random junk startlast value", apiModel.Messages[2])
+    fields := messageParser.parseMessage("the valueend random junk startlast value",
+        apiModel, 2)
     if len(fields) < 1 {
-        test.Error("Empty field array returned")
+        test.Error("Empty array returned")
     }
     for position, field := range fields {
         if position == 1 && field.Value != "the value" {
