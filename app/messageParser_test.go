@@ -66,8 +66,8 @@ func TestPanicMessage (test *testing.T) {
 func TestParseMessage (test *testing.T) {
     apiModel := setup()
     messageParser := messageParser{ApiModel: apiModel}
-    fields := messageParser.parseMessage("garabageField 123<<VALUE>>Closingmore garbage",
-        apiModel, 1)
+    fields := messageParser.parseMessage("garbageField 123<<VALUE>>Closingmore garbage",
+        apiModel, 0)
     if len(fields) < 1 {
         test.Error("Empty array returned")
     }
