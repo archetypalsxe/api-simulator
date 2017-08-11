@@ -25,6 +25,9 @@ func (self * messageParser) determineMessage(body string) messagesModel {
 
 // Parse the provided message for any necessary dynamic fields
 func (self * messageParser) parseMessage(body string, apiModel apiModel, messagePosition int) []messageFieldsModel {
+
+    var messageFields []messageFieldsModel
+
     template := apiModel.Messages[messagePosition].Template
 
     // @TODO Remove
@@ -63,66 +66,23 @@ func (self * messageParser) parseMessage(body string, apiModel apiModel, message
             }
             postField := modifiedTemplate[0:nextField]
             template = modifiedTemplate[nextField+fieldWidth:len(modifiedTemplate)]
+            // @TODO Remove debugging code
             log.Println(preField)
             log.Println(fieldName)
             log.Println(postField)
+
+            messageFieldsModel := messageFieldsModel{MessageId: apiModel.Messages[messagePosition].Id,
+                FieldName: fieldName}
+
             // Getting all the fields from the template, need to actually parse the message now
+            body = body[strings.Index(body, preField) + len(preField):len(body)]
+            fieldValue := body[0:strings.Index(body, postField)]
+            messageFieldsModel.Value = fieldValue
+            messageFieldsModel.display()
+            messageFields = append(messageFields, messageFieldsModel)
         }
-
-
-        /*
-        // @TODO Maybe remove everything below
-        // @TODO Remove
-        log.Println(body)
-        //firstWildCard := strings.Index(body, apiModel.WildCard)
-        // The body after the first wild card
-        modifiedBody := body[(firstWildCard+len(apiModel.WildCard)):len(body)]
-        secondWildCard := strings.Index(modifiedBody, apiModel.WildCard)
-        firstStart := strings.Index(body, apiModel.BeginningEscape)
-        firstEnd := strings.Index(body, apiModel.EndingEscape)
-        log.Println(strconv.Itoa(firstWildCard))
-        log.Println(strconv.Itoa(secondWildCard))
-        log.Println(strconv.Itoa(firstStart))
-        log.Println(strconv.Itoa(firstEnd))
-        if(firstStart > -1) {
-            if(firstEnd < 0) {
-                log.Fatal("We have a start without an end!")
-            }
-            // Check to make sure that we don't have 2 wild cards before the first starting point
-            if(firstStart > secondWildCard) {
-                // @TODO Get the data between
-                body = body[(firstEnd+len(apiModel.EndingEscape)):len(body)]
-            } else {
-                body = modifiedBody
-            }
-        } else {
-            body = ""
-        }
-        */
     }
 
-    // @TODO Remove
-    log.Fatal("Testing")
-
-    // @TODO Remove
-    /*
-    positions := self.getPositions(body, apiModel.BeginningEscape)
-    for _, position := range positions {
-        positionString := strconv.Itoa(position)
-        log.Printf(positionString)
-    }
-
-    wildCards := self.getPositions(body, apiModel.WildCard)
-    for _, wildCardPosition := range wildCards {
-        wildCardPositionString := strconv.Itoa(wildCardPosition)
-        log.Printf(wildCardPositionString)
-    }
-    log.Fatal("Testing")
-
-    /**
-     * Parse the message into parts, ie value, start, end, identifier
-     */
-    var messageFields []messageFieldsModel
     return messageFields
 }
 
